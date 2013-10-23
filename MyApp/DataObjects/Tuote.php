@@ -53,7 +53,7 @@ class Tuote
     
     function getKuvaus()
     {
-        return $this->_kuvaus;
+        return $this->_kuvaus . "Hololoooooo";
     }
 }
 ?>
