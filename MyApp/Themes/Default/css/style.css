@@ -2,11 +2,11 @@ body
 {
     background-color: rgb(27, 27, 27);
     background-image: url(../img/bg.png);
-    background-size: 10% auto;
+
     font-family: Geneva;
     font-size: 10pt;
     color: #000;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: 'Voltaire', sans-serif;
 }
 
 p
@@ -23,11 +23,23 @@ h1
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     font-weight: 100;
+    font-family: 'IM Fell English', serif;
+}
+
+input, intput:hover, button, button:hover
+{
+    transition: all .2s linear;
 }
 
 a
 {
     color: #924E32;
+    transition: all .2s linear;
+}
+
+a:hover
+{
+    transition: all .2s linear;
 }
 
 td
@@ -55,7 +67,7 @@ td.shoppingcart
     height: 180px;
     background-color: #333;
     color: #fff;
-    background-image: url(../img/bg_header.png);
+    background-image: url(../img/bg_header.jpg);
     background-size: 100% auto;
     border: 1px solid #666;
     text-align:center;
@@ -64,7 +76,8 @@ td.shoppingcart
 
 #logo h1 a
 {
-	font: 97pt Helvetica, Arial, Sans-Serif;
+    line-height: 180px;
+    font-size: 97pt;
     letter-spacing: -5px;  
     color: rgba(255,255,255,0.3);
     text-shadow: 0px 3px 8px rgba(0,0,0,0.8);
@@ -83,7 +96,8 @@ td.shoppingcart
     
     #logo h1 a
     {
-        font: 10.8vw Helvetica, Arial, Sans-Serif;
+        line-height: 15vw;
+        font-size: 10.8vw;
     }
 }
 
@@ -142,6 +156,11 @@ td.shoppingcart
     border-left: 3px solid #ccc;
 }
 
+#nav .navitem.last a
+{
+    border-bottom: 0;
+}
+
 #nav a:hover
 {
 	color: #fff;
@@ -158,11 +177,21 @@ td.shoppingcart
     border-left: 3px solid #924E32;
 }
 
-#nav .alakategoria hidden
+#nav .alakategoria
 {
-    visibility: hidden;
-    height: 0;
-    
+    overflow:hidden;
+    max-height: 0;
+    transition: all 4s ease-in-out;
+}
+
+#nav .alakategoria.active
+{
+    max-height: 200em;
+}
+
+#nav li:hover > .alakategoria
+{
+    max-height: 200em;
 }
 
 /* ------------------------ CONTENT --------------------- */
@@ -209,6 +238,30 @@ td.shoppingcart
     text-align: right;
 }
 
+#searchandshoppingcart .shoppingcart .btn ul
+{
+    max-height: 0;
+    right: 0;
+    left: auto;
+    color: #000;
+    text-align: left;
+    display: block;
+    visibility: hidden;
+    overflow: hidden;
+    transition: all 0.8s ease-in-out;
+}
+
+#searchandshoppingcart .shoppingcart .btn:focus > ul
+{
+    visibility: visible;
+    max-height: 200em;
+}
+
+#searchandshoppingcart .shoppingcart .btn ul li
+{
+    margin: .3em;
+}
+
 /* ------------------------ FOOTER --------------------- */
 #footer
 {
@@ -220,4 +273,10 @@ td.shoppingcart
     border: 1px solid #666;
     padding: 0.5em;
     border-radius: 4px;
+}
+
+/* ------------------------ LOGIN --------------------- */
+.loginform, .registerform, .lostpasswordform
+{
+    max-width: 20em;
 }

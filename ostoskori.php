@@ -23,7 +23,7 @@ $ostoskori = $_SESSION['ostoskori'];
 
 if(isset($_POST['add']))
 {
-    echo "Lisätään...";
+    echo '{"ostoskori": [{"id": "1", "tuote": "Tuote 1", "hinta": "10.3"}] }';
 }
 
 ?>

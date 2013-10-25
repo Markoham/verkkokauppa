@@ -3,8 +3,9 @@ namespace MyApp;
 
 class Verkkokauppa
 {
-    private $_db, $_theme, $_user;
+    private $_db, $_theme, $_asiakas = false;
     private $_root= "/teht/verkkokauppa/";
+    private $_salt1, $_salt2;
     
     function __construct()
     {
@@ -15,6 +16,9 @@ class Verkkokauppa
         else
             $this->_theme = "Default";
         
+        $this->_salt1 = $salt1;
+        $this->_salt2 = $salt2;
+        
         $this->_db = new Database\DatabaseHandler();
         $this->_db->setHost($host);
         $this->_db->setUsername($username);
@@ -22,6 +26,14 @@ class Verkkokauppa
         $this->_db->setDatabase($database);
         $this->_db->setPrefix($database_prefix);
         $this->_db->connect();
+        
+        $this->isLoggedIn();
+        
+        if(isset($_GET['logout']) && $this->_asiakas)
+        {
+            $this->logout();
+            header("Location: ?logout");
+        }
     }
     
     function importExtralibs()
@@ -31,9 +43,80 @@ class Verkkokauppa
         //echo "<script src=\"" . $this->_root . "MyApp/Themes/extralib/bootstrap/js/bootstrap.min.js\"></script>\n";
     }
     
+    function isLoggedIn()
+    {
+        if(isset($_SESSION['id']))
+        {
+            $this->_asiakas = $this->_db->getAsiakas($_SESSION['id']);
+            
+            if($_SESSION['hash'] != $this->createHash($this->_asiakas->getEtunimi() . $this->_asiakas->getSukunimi() . $this->_asiakas->getId() . $_SESSION['loggedin']))
+            {
+                $this->_asiakas = false;
+            }
+        }
+    }
+    
+    function createHash($value)
+    {
+        return hash("sha512", $value);
+    }
+    
+    function createPasswordHash($value)
+    {
+        return hash("sha512", $this->_salt1 . $value . $this->_salt2);
+    }
+    
+    function getUser()
+    {
+        return $this->_asiakas;
+    }
+    
+    function logout()
+    {
+        session_destroy();
+    }
+    
+    function checkLogin($email, $salasana)
+    {
+        $asiakas = $this->_db->getAsiakasByEmail($email);
+        
+        if($asiakas->getSalasana() == $this->createPasswordHash($salasana))
+        {
+            $this->_asiakas = $asiakas;
+            $timestamp = time();
+            $_SESSION['loggedin'] = $timestamp;
+            $_SESSION['id'] = $asiakas->getId();
+            $_SESSION['hash'] = $this->createHash($asiakas->getEtunimi() . $asiakas->getSukunimi() . $asiakas->getId() . $timestamp);
+            
+            return $asiakas;
+        }
+        
+        return false;
+    }
+    
+    function sendLostPassword($email)
+    {
+         $asiakas = $this->_db->getAsiakasByEmail($email);
+    }
+    
+    function addUser($etunimi, $sukunimi, $email, $salasana)
+    {
+        if($this->_db->getAsiakasByEmail($email))
+            return -1;
+        
+        $id = $this->_db->addAsiakas($etunimi, $sukunimi, $email, $this->createPasswordHash($salasana));
+        $this->checkLogin($email, $salasana);
+        return $id;
+    }
+    
     function getThemeUrlPath()
     {
         return $this->_root . $this->getThemePath();
+    }
+    
+    function cleanInput($array, $key, $type = "string")
+    {
+        return $array[$key];
     }
     
     function getThemepath()
@@ -61,6 +144,14 @@ class Verkkokauppa
         {
             include($this->getThemepath() . "login.php");
         }
+        else if(isset($_GET['lostpassword']))
+        {
+            include($this->getThemepath() . "lostpassword.php");
+        }
+        else if(isset($_GET['register']))
+        {
+            include($this->getThemepath() . "register.php");
+        }
         else if(isset($_GET['logout']))
         {
             include($this->getThemepath() . "logout.php");
@@ -71,46 +162,34 @@ class Verkkokauppa
         }
     }
     
-    function getTuote()
+    function getNav()
     {
+        global $framework;
+        
+        include($this->getThemepath() . "nav.php");
+    }
+    
+    function getTuote($tuote = null)
+    {
+        if(!$tuote)
+            $tuote = $this->cleanInput($_GET, 'product');
+        
+        return $this->_db->getTuote($tuote);
+    }
+    
+    function getVarastoSaldo($id)
+    {
+        return $this->_db->getVarastosaldo($id);
     }
     
     function getTuotteet()
     {
-        echo "<table id=\"tuotelista\" class=\"table\">";
-        echo "<thead><tr><th class=\"product\">Tuote</th><th class=\"price\">Hinta</th><th class=\"shoppingcart\"></th></tr></thead><tbody>";
-        $tuotteet = $this->_db->getTuotteet($_GET['cat']);
-        for($i = 0, $c = count($tuotteet); $i < $c; $i++)
-        {
-            echo "<tr><td class=\"product\"><p><a href=\"?cat=" . $_GET['cat'] . "&amp;product=" . $tuotteet[$i]->getId() . "\">" . $tuotteet[$i]->getTuotteennimi() . "</a></p><p>" . $tuotteet[$i]->getKuvaus() . "</p></td><td class=\"price\">" . str_replace(".",",", $tuotteet[$i]->getHinta()) . " &euro;</span></td><td class=\"shoppingcart\"><button type=\"button\" class=\"btn btn-primary\"><span class=\"glyphicon glyphicon-plus\"></span> Lisää koriin</td></button></tr>";
-        }
-        echo "</tbody></table>";
+        return $this->_db->getTuotteet($this->cleanInput($_GET, 'cat'));
     }
     
     function getKategoriat()
     {
-        echo "<ul>";
-        echo "<li class=\"navitem\"><a href=\"" . $this->getBasePath() . "\"><span class=\"glyphicon glyphicon-home\"></span> Etusivu</a></li>";
-        $categorylist = $this->_db->getCategorys();
-        for($i = 0, $c = count($categorylist); $i < $c; $i++)
-        {
-            echo "<li><a class=\"paakategoria\" href=\"#" . $categorylist[$i]->getKategoria() . "\">" . $categorylist[$i]->getKategoria() . "</a></li>";
-            if(count($categorylist[$i]->getAlakategoriat()) > 0)
-            {
-                echo "<ul class=\"alakategoria " . $categorylist[$i]->getKategoria() . "\">";
-                $alacategorylist = $categorylist[$i]->getAlakategoriat();
-                for($j = 0, $n = count($alacategorylist); $j < $n; $j++)
-                {
-                    echo "<li><a " . (@$_GET['cat'] == $alacategorylist[$j]->getId() ? "class=\"active\" " : "") . "href=\"?cat=" . $alacategorylist[$j]->getId() . "\">" . $alacategorylist[$j]->getKategoria() . "</a></li>";
-                }
-                echo "</ul>";
-            }
-        }
-        if($this->_user)
-            echo "<li class=\"navitem\"><a " . (isset($_GET['logout']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?logout\"><span class=\"glyphicon glyphicon-log-out\"></span> Kirjaudu ulos</a></li>";
-        else
-            echo "<li class=\"navitem\"><a " . (isset($_GET['login']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?login\"><span class=\"glyphicon glyphicon-log-in\"></span> Kirjaudu sisään</a></li>";
-        echo "</ul>";
+        return $this->_db->getCategorys();
     }
 }
 ?>

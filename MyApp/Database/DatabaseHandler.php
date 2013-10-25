@@ -32,6 +32,7 @@ class DatabaseHandler
         $this->_prefix = $prefix . "_";
     }
     
+    // Yhdistää tietokantaan
     function connect()
     {
         if ($this->_pdo)
@@ -46,53 +47,74 @@ class DatabaseHandler
         $this->_pdo->exec("SET NAMES utf8");
     }
     
+    // Hakee varastosaldon tuotteelle
+    function getVarastosaldo($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT SUM(maara) AS total FROM " . $this->_prefix . "varasto WHERE tuoteid = ?;");
+        $kysely->execute(array($id));
+
+        $rivi = $kysely->fetchAll()[0];
+        
+        if($rivi['total'])
+            return $rivi['total'];
+        else
+            return 0;
+    }
+    
+    // Hakee halutun tuotteen
+    function getTuote($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tuotteet WHERE idtuote = ?;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tuote");
+        $kysely->execute(array($id));
+
+        return $kysely->fetchAll()[0];
+    }
+    
+    // Hakee kategorian tuotteet
     function getTuotteet($kategoria)
     {
         $tuotteet = Array();
 
         $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tuotteet AS t, " . $this->_prefix . "tuotteenkategoriat AS tk WHERE tk.tuoteid = t.idtuote AND tk.kategoriaid = ?;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tuote");
         $kysely->execute(array($kategoria));
 
-        while ($rivi = $kysely->fetch())
+        while ($tuote = $kysely->fetch())
         {
-            $tuote = new \MyApp\DataObjects\Tuote();
-            
-            $tuote->setId($rivi['idtuote']);
-            $tuote->setValmistajanTuotenumero($rivi['valmistajantuotenumero']);
-            $tuote->setTuotteennimi($rivi['tuotteennimi']);
-            $tuote->setHinta($rivi['hinta']);
-            $tuote->setKuvaus($rivi['kuvaus']);
             $tuotteet[] = $tuote;
         }
         
         return $tuotteet;
     }
     
+    // Hakee kategorian
+    function getCategory($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat WHERE paakategoria = 1;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Kategoria");
+        $kysely->execute(array($id));
+
+        return $kysely->fetchAll()[0];
+    }
+    
+    // Hakee kategoriat
     function getCategorys()
     {
         $kategoriat = Array();
 
         $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat WHERE paakategoria = 1;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Kategoria");
         $kysely->execute();
 
-        while ($rivi = $kysely->fetch())
+        while ($kat = $kysely->fetch())
         {
-            $kat = new \MyApp\DataObjects\Kategoria();
-            
-            $kat->setId($rivi['idkategoria']);
-            $kat->setKategoria($rivi['kategoria']);
-            $kat->setPaakategoria($rivi['paakategoria']);
-            
             $kyselyAla = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat AS k," . $this->_prefix . "alakategoriat AS ak WHERE ak.alakategoriaid = k.idkategoria AND ak.ylakategoriaid = ?;");
-            $kyselyAla->execute(array($rivi['idkategoria']));
+            $kyselyAla->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Kategoria");
+            $kyselyAla->execute(array($kat->getId()));
 
-            while ($riviAla = $kyselyAla->fetch())
+            while ($alaKat = $kyselyAla->fetch())
             {
-                $alaKat = new \MyApp\DataObjects\Kategoria();
-                $alaKat->setId($riviAla['idkategoria']);
-                $alaKat->setKategoria($riviAla['kategoria']);
-                $alaKat->setPaakategoria($riviAla['paakategoria']);
-                
                 $kat->addAlakategoria($alaKat);
             }
             
@@ -102,6 +124,38 @@ class DatabaseHandler
         return $kategoriat;
     }
     
+    // Hakee asiakkaan
+    function getAsiakas($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "asiakkaat WHERE idasiakas = ?;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Asiakas");
+        $kysely->execute(array($id));
+
+        return $kysely->fetchAll()[0];
+    }
+    
+    // Hakee käyttäjän sähköpostiosoitteen avulla
+    function getAsiakasByEmail($email)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "asiakkaat WHERE email = ?;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Asiakas");
+        $kysely->execute(array($email));
+
+        $asiakas = @$kysely->fetchAll()[0];
+        
+        return $asiakas;
+    }
+    
+    // Lisää asiakkaan tietokantaan
+    function addAsiakas($etunimi, $sukunimi, $email, $salasana)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "asiakkaat (etunimi, sukunimi, email, salasana) VALUES (?, ?, ?, ?);");
+        $kysely->execute(array($etunimi, $sukunimi, $email, $salasana));
+        
+        return $this->_pdo->lastInsertId();
+    }
+    
+    // Sulkee yhteyden
     function close()
     {
         $this->_pdo = null;

@@ -16,6 +16,19 @@ spl_autoload_register(function($class) {
 
 $framework = new \MyApp\Verkkokauppa();
 
-include($framework->getThemepath() . "index.php");
+if(!isset($_SESSION['ostoskori']))
+    $_SESSION['ostoskori'] = new \MyApp\DataObjects\Ostoskori();
+
+$ostoskori = $_SESSION['ostoskori'];
+
+if(isset($_POST['ostoskori']) && isset($_POST['add']))
+{
+    $ostoskori->addTuote($framework->getTuote($_POST['add']));
+    echo '{"ostoskori": [{"id": "1", "tuote": "Tuote 1", "hinta": "10.3"}] }';
+}
+else
+{
+    include($framework->getThemepath() . "index.php");
+}
 // http://www.ohjelmointiputka.net/keskustelu/26544-oman-funktiokirjaston-rakentaminen/sivu-1
 ?>

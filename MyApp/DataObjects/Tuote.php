@@ -4,56 +4,56 @@ namespace MyApp\DataObjects;
 
 class Tuote
 {
-    private $_id, $_valmtun, $_tuotteennimi, $_kuvaus, $_hinta;
+    private $idtuote, $valmtun, $tuotteennimi, $kuvaus, $hinta;
     
     function setId($id)
     {
-        $this->_id = $id;
+        $this->idtuote = $id;
     }
     
     function setValmistajanTuotenumero($valmtun)
     {
-        $this->_valmtun = $valmtun;
+        $this->valmtun = $valmtun;
     }
     
     function setTuotteennimi($tuotteennimi)
     {
-        $this->_tuotteennimi = $tuotteennimi;
+        $this->tuotteennimi = $tuotteennimi;
     }
     
     function setHinta($hinta)
     {
-        $this->_hinta = $hinta;
+        $this->hinta = $hinta;
     }
     
     function setKuvaus($kuvaus)
     {
-        $this->_kuvaus = $kuvaus;
+        $this->kuvaus = $kuvaus;
     }
     
     function getId()
     {
-        return $this->_id;
+        return $this->idtuote;
     }
     
     function getValmistajanTuotenumero()
     {
-        return $this->_valmtun;
+        return $this->valmtun;
     }
     
     function getTuotteennimi()
     {
-        return $this->_tuotteennimi;
+        return $this->tuotteennimi;
     }
     
     function getHinta()
     {
-        return $this->_hinta;
+        return $this->hinta;
     }
     
     function getKuvaus()
     {
-        return $this->_kuvaus . "Hololoooooo";
+        return $this->kuvaus . "Hololoooooo";
     }
 }
 ?>

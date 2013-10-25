@@ -4,46 +4,46 @@ namespace MyApp\DataObjects;
 
 class Kategoria
 {
-    private $_id, $_kategoria, $_paakategoria, $_alakategoriat = Array();
+    private $idkategoria, $kategoria, $paakategoria, $alakategoriat = Array();
     
     function getId()
     {
-        return $this->_id;
+        return $this->idkategoria;
     }
     
     function getKategoria()
     {
-        return $this->_kategoria;
+        return $this->kategoria;
     }
     
     function getPaaKategoria()
     {
-        return $this->_paakategoria;
+        return $this->paakategoria;
     }
     
     function getAlakategoriat()
     {
-        return $this->_alakategoriat;
+        return $this->alakategoriat;
     }
     
     function setId($id)
     {
-        $this->_id = $id;
+        $this->idkategoria = $id;
     }
     
     function setKategoria($kategoria)
     {
-        $this->_kategoria = $kategoria;
+        $this->kategoria = $kategoria;
     }
     
     function setPaakategoria($paakategoria)
     {
-        $this->_paakategoria = $paakategoria;
+        $this->paakategoria = $paakategoria;
     }
     
     function addAlakategoria($kategoria)
     {
-        $this->_alakategoriat[] = $kategoria;
+        $this->alakategoriat[] = $kategoria;
     }
 }
 ?>

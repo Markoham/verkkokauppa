@@ -1,27 +1,25 @@
-window.onload = init;
-
-function init()
+function addTuote(tuote)
 {
-    var linkit = document.querySelectorAll("#nav a.paakategoria");
-    for(var i = 0, l = linkit.length; i < l; i++)
+    var xmlhttp;
+    
+    if(tuote != "")
     {
-        link = linkit[i];
+        xmlhttp = new XMLHttpRequest();
         
-        link.addEventListener('click', function(e){
-            console.log("Show submenu");
-        });
+        xmlhttp.onreadystatechange = function()
+        {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+            {
+                updateOstoskori(JSON.parse(xmlhttp.responseText));
+            }
+        }
+        xmlhttp.open("POST",basepath,true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("add=" + tuote + "&ostoskori=true");
     }
 }
 
-function addTuote(tuote)
+function updateOstoskori(ostoskori)
 {
-    xmlhttp.open("POST","ostoskori.php",true);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("add=" + tuote);
-    
-    updateOstoskori();
-}
-
-function updateOstoskori()
-{
+    console.log(ostoskori);
 }
