@@ -7,26 +7,31 @@ class DatabaseHandler
     private $_pdo;
     private $_host, $_username, $_passwd, $_database, $_prefix;
     
+    // Asettaa tietokannan osoitteen
     function setHost($host)
     {
         $this->_host = $host;
     }
     
+    // Asettaa käyttäjätunnuksen
     function setUsername($username)
     {
         $this->_username = $username;
     }
     
+    // Asettaa salasanan
     function setPassword($passwd)
     {
         $this->_passwd = $passwd;
     }
     
+    // Asettaa tietokannan nimi
     function setDatabase($database)
     {
         $this->_database = $database;
     }
     
+    // Asettaa tunnisteen tietokantoja varten
     function setPrefix($prefix)
     {
         $this->_prefix = $prefix . "_";
@@ -149,6 +154,7 @@ class DatabaseHandler
     // Lisää asiakkaan tietokantaan
     function addAsiakas($etunimi, $sukunimi, $email, $salasana)
     {
+        $privateHash = uniqid($etunimi . $sukunimi);
         $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "asiakkaat (etunimi, sukunimi, email, salasana) VALUES (?, ?, ?, ?);");
         $kysely->execute(array($etunimi, $sukunimi, $email, $salasana));
         

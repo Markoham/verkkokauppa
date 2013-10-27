@@ -18,8 +18,12 @@
         }
         echo "</li>";
     }
-    if($this->_asiakas)
-        echo "<li class=\"navitem\"><a " . (isset($_GET['logout']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?logout\"><span class=\"glyphicon glyphicon-log-out\"></span> Kirjaudu ulos</a></li>";
+    if($this->getUser())
+    {
+        echo "<li class=\"navitem\"><a " . (isset($_GET['userinfo']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?userinfo\"><span class=\"glyphicon glyphicon-user\"></span> Omat tiedot</a></li>";
+        
+        echo "<li class=\"navitem last\"><a " . (isset($_GET['logout']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?logout\"><span class=\"glyphicon glyphicon-log-out\"></span> Kirjaudu ulos</a></li>";
+    }
     else
         echo "<li class=\"navitem last\"><a " . (isset($_GET['login']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?login\"><span class=\"glyphicon glyphicon-log-in\"></span> Kirjaudu sisään</a></li>";
     echo "</ul>";

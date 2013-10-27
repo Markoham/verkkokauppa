@@ -26,3 +26,6 @@
 </div>
 <p>Unohditko salasanasi? Ei hätää, tilaa uusi salasana sähköpostiisi <a href="?lostpassword">tästä</a></p>
 <p>Eikö vielä tunnusta? Ei hätää, luo itsellesi tunnus <a href="?register">tästä</a></p>
+<script>
+    document.getElementById("email").focus();
+</script>

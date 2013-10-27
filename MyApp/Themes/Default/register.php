@@ -3,7 +3,7 @@
 <?php
 if(isset($_POST['etunimi']) && isset($_POST['sukunimi']) && isset($_POST['email']) && isset($_POST['passwd']))
 {
-    $status = $framework->addUser($_POST['etunimi'], $_POST['sukunimi'], $_POST['email'], $_POST['passwd']);
+    $status = $framework->addAsiakas($_POST['etunimi'], $_POST['sukunimi'], $_POST['email'], $_POST['passwd']);
     if($status == -1)
         echo "Käyttäjätunnus onjo käytössä!";
     else if($status)

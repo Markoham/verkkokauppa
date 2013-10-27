@@ -60,6 +60,39 @@ td.shoppingcart
     width: 6em;
 }
 
+#ostoskori .picture, #tuotelista .picture
+{
+    width: 8em;
+}
+
+#ostoskori .picture img, #tuotelista .picture img
+{
+    max-width: 8em;
+    border: 1px solid #393939;
+}
+
+#ostoskori .product
+{
+}
+
+#ostoskori .price
+{
+    text-align: right;
+    min-width: 4em;
+}
+
+#ostoskori .quantity
+{
+    text-align: right;
+    width: 6em;
+}
+
+#ostoskori .quantity input
+{
+    display: inherit;
+    width: 4em;
+}
+
 /* ------------------------ LOGO --------------------- */
 #logo
 {
@@ -273,6 +306,21 @@ td.shoppingcart
     border: 1px solid #666;
     padding: 0.5em;
     border-radius: 4px;
+}
+
+#footer .center
+{
+    text-align: center;
+}
+
+#footer .left
+{
+    text-align: left;
+}
+
+#footer .right
+{
+    text-align: right;
 }
 
 /* ------------------------ LOGIN --------------------- */

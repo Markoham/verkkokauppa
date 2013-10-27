@@ -3,26 +3,35 @@ namespace MyApp\DataObjects;
 
 class Ostoskori
 {
-    private $_tuotteet = Array();
+    private $tuotteet = Array();
     
-    function addTuote($id)
+    function addTuote($tuote)
     {
-        $this->_tuotteet[] = $id;
+        if(array_key_exists($tuote->getTuoteId(), $this->tuotteet))
+        {
+            $temp = $this->tuotteet[$tuote->getTuoteId()];
+            
+            $temp->setMaara($temp->getMaara() + 1);
+            
+            $this->tuotteet[$tuote->getTuoteId()] = $temp;
+        }
+        else
+            $this->tuotteet[$tuote->getTuoteId()] = $tuote;
     }
     
-    function removeTuote($id)
+    function removeTuote($tuote)
     {
-        $this->_tuotteet = array_diff($this->_tuotteet, array($id));
+        $this->tuotteet = array_diff($this->_tuotteet, array($tuote));
+    }
+    
+    function updateTuote($tuote)
+    {
+        $this->tuotteet[$tuote->getTuoteId()] = $tuote;
     }
     
     function getTuotteet()
     {
-        return $this->_tuotteet;
-    }
-    
-    function clear()
-    {
-        $this->_tuotteet = Array();
+        return $this->tuotteet;
     }
 }
 ?>

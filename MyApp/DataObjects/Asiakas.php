@@ -4,7 +4,7 @@ namespace MyApp\DataObjects;
 
 class Asiakas
 {
-    private $idasiakas, $etunimi, $sukunimi, $salasana;
+    private $idasiakas, $etunimi, $sukunimi, $email, $salasana, $privateHash;
     
     function getId()
     {
@@ -21,9 +21,19 @@ class Asiakas
         return $this->sukunimi;
     }
     
+    function getEmail()
+    {
+        return $this->email;
+    }
+    
     function getSalasana()
     {
         return $this->salasana;
+    }
+    
+    function getPrivateHash()
+    {
+        return $privateHash;
     }
     
     function setId($id)
@@ -41,9 +51,19 @@ class Asiakas
         $this->sukunimi = $sukunimi;
     }
     
+    function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    
     function setSalasana($salasana)
     {
         $this->salasana = $salasana;
+    }
+    
+    function setPrivateHash($privateHash)
+    {
+        $this->privateHash = $privateHash;
     }
 }
 ?>
