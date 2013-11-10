@@ -1,0 +1,54 @@
+body
+{
+	background-color: rgb(27,27,27);;
+    background-attachment:fixed;
+    font-family: 'Scada', sans-serif;
+}
+
+.errorblock
+{
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	right: 20px;
+	color: #FF0000;
+	background-color: rgba(0,0,0, 0.75);
+	text-align: left;
+	padding: 5px;
+}
+
+.black
+{
+    color: #000;
+}
+
+.errorblock h4
+{
+	margin: 0;
+}
+
+#container
+{
+	width: 770px;
+	height: 350px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -175px 0 0 -385px;
+	background-color: #000;
+	background-image: url(../img/login.png);
+	background-repeat: no-repeat;
+	text-align: right;
+	color: #fff;
+	border: 1px solid #333;
+    border-radius: 4px;
+}
+
+#container .login-form
+{
+	float: right;
+	text-align: left;
+	padding: 1em;
+	width: auto;
+    width: 20em;
+}

@@ -22,7 +22,9 @@ class Verkkokauppa extends \MyApp\UserInfo
     function importExtralibs()
     {
         echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/unsemantic/css/unsemantic-grid-responsive.css\" />\n";
-        echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/bootstrap/css/bootstrap.min.css\" />\n";
+        echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/font-awesome/css/font-awesome.min.css\">
+";
+        //echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/bootstrap/css/bootstrap.min.css\" />\n";
         //echo "<script src=\"" . $this->_root . "MyApp/Themes/extralib/bootstrap/js/bootstrap.min.js\"></script>\n";
     }
 
@@ -38,10 +40,15 @@ class Verkkokauppa extends \MyApp\UserInfo
         return (isset($_SESSION['ostoskori']) ? unserialize($_SESSION['ostoskori']) : null);
     }
     
-    // uloskirjautuminen
-    function logout()
+    function validEmail($email)
     {
-        session_destroy();
+        require_once('Validate.php');
+        
+        if (@\Validate::email($email, array('check_domain' => 'true','use_rfc822' => true))) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     // Hakee tuotteen kuvan
@@ -51,7 +58,7 @@ class Verkkokauppa extends \MyApp\UserInfo
         if(is_file($image))
             return image;
         else
-            return $this->getBasePath() . $this->getThemepath() . "/img/default.jpg";
+            return $this->getBasePath() . "tuotekuvat/img/default.jpg";
     }
     
     // Hakee tuotteen pienen kuvan
@@ -61,7 +68,7 @@ class Verkkokauppa extends \MyApp\UserInfo
         if(is_file($image))
             return image;
         else
-            return $this->getBasePath() . $this->getThemepath() . "/img/default_thumb.jpg";
+            return $this->getBasePath() . "tuotekuvat/default_thumb.jpg";
     }
     
     // Teeman osoite 

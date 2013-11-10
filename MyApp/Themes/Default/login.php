@@ -6,7 +6,7 @@
         $status = $framework->checkLogin($_POST['email'], $_POST['passwd']);
         
         if(!$status)
-            echo "Käyttäjätunnus tai salasana väärin!";
+            echo "<div class=\"alert alert-danger\">Käyttäjätunnus tai salasana väärin!</div>";
         else
             header("location: " . $framework->getBasePath());
     }

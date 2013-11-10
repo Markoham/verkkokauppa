@@ -76,6 +76,23 @@ class DatabaseHandler
         return $kysely->fetchAll()[0];
     }
     
+    // Hakee kaikki tuotteet
+    function getKaikkiTuotteet()
+    {
+        $tuotteet = Array();
+
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tuotteet;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tuote");
+        $kysely->execute();
+
+        while ($tuote = $kysely->fetch())
+        {
+            $tuotteet[] = $tuote;
+        }
+        
+        return $tuotteet;
+    }
+    
     // Hakee kategorian tuotteet
     function getTuotteet($kategoria)
     {
@@ -159,6 +176,45 @@ class DatabaseHandler
         $kysely->execute(array($etunimi, $sukunimi, $email, $salasana));
         
         return $this->_pdo->lastInsertId();
+    }
+    
+    // Hakee käyttäjän sähköpostiosoitteen avulla
+    function getTyontekijaByEmail($email)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tyontekijat WHERE email = ?;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tyontekija");
+        $kysely->execute(array($email));
+
+        $asiakas = @$kysely->fetchAll()[0];
+        
+        return $asiakas;
+    }
+    
+    // Hakee työntekijän
+    function getTyontekija($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tyontekijat WHERE idtyontekija = ?;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tyontekija");
+        $kysely->execute(array($id));
+
+        return $kysely->fetchAll()[0];
+    }
+    
+    // Hakee työntekijät
+    function getTyontekijat()
+    {
+        $tyontekijat = Array();
+
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tyontekijat;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tyontekija");
+        $kysely->execute();
+
+        while ($tyontekija = $kysely->fetch())
+        {
+            $tyontekijat[] = $tyontekija;
+        }
+        
+        return $tyontekijat;
     }
     
     // Sulkee yhteyden

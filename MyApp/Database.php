@@ -40,7 +40,10 @@ class Database
     
     function getTuotteet()
     {
-        return $this->_db->getTuotteet($this->cleanInput($_GET, 'cat'));
+        if(isset($_GET['cat']))
+            return $this->_db->getTuotteet($this->cleanInput($_GET, 'cat'));
+        else
+            return $this->_db->getKaikkiTuotteet();
     }
     
     function getKategoriat()
@@ -48,7 +51,7 @@ class Database
         return $this->_db->getCategorys();
     }
     
-        // Lisää asiakkaan
+    // Lisää asiakkaan
     function addAsiakkas($etunimi, $sukunimi, $email, $salasana)
     {
         if($this->_db->getAsiakasByEmail($email))
@@ -57,6 +60,22 @@ class Database
         $id = $this->_db->addAsiakas($etunimi, $sukunimi, $email, $this->createPasswordHash($salasana));
         $this->checkLogin($email, $salasana);
         return $id;
+    }
+    
+    // Lisää työntekijän
+    function addTyontekija($etunimi, $sukunimi, $email, $salasana)
+    {
+        if($this->_db->getTyontekijaByEmail($email))
+            return -1;
+        
+        $id = $this->_db->addTyontekija($etunimi, $sukunimi, $email, $this->createPasswordHash($salasana));
+        return $id;
+    }
+    
+    
+    function getTyontekijat()
+    {
+        return $this->_db->getTyontekijat();
     }
         
     // Lähettää hukatun salasanan

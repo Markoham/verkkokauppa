@@ -5,13 +5,19 @@ class UserInfo extends \MyApp\Database
 {
     private $_user = false;
     private $_salt1, $_salt2;
+    private $_asiakas;
+    private $_sessionprefix;
     
     function __construct($path = "", $asiakas = true)
     {
         parent::__construct($path);
         $this->init($path);
+        $this->_asiakas = $asiakas;
         
-        $this->isLoggedIn($asiakas);
+        if($asiakas) $this->_sessionprefix = "asiakas";
+        else $this->_sessionprefix = "hallinta";
+        
+        $this->isLoggedIn();
         
         if(isset($_GET['logout']) && $this->_user)
         {
@@ -31,18 +37,18 @@ class UserInfo extends \MyApp\Database
     }
     
     // tarkistaa onko käyttäjä kirjautuneena
-    function isLoggedIn($asiakas)
+    function isLoggedIn()
     {
-        if(isset($_SESSION['id']))
+        if(isset($_SESSION[$this->_sessionprefix . 'id']))
         {
-            if($asiakas)
-            {
-                $this->_user = $this->_db->getAsiakas($_SESSION['id']);
+            if($this->_asiakas)
+                $this->_user = $this->_db->getAsiakas($_SESSION[$this->_sessionprefix . 'id']);
+            else
+                $this->_user = $this->_db->getTyontekija($_SESSION[$this->_sessionprefix . 'id']);
             
-                if($_SESSION['hash'] != $this->createHash($this->_user->getEtunimi() . $this->_user->getSukunimi() . $this->_user->getId() . $_SESSION['loggedin']))
-                {
-                    $this->_user = false;
-                }
+            if($_SESSION[$this->_sessionprefix . 'hash'] != $this->createHash($this->_user->getEtunimi() . $this->_user->getSukunimi() . $this->_user->getId() . $_SESSION[$this->_sessionprefix . 'loggedin']))
+            {
+                $this->_user = false;
             }
         }
     }
@@ -65,18 +71,27 @@ class UserInfo extends \MyApp\Database
         return $this->_user;
     }
     
+    // uloskirjautuminen
+    function logout()
+    {
+        session_destroy();
+    }
+    
     // Tarkistaa että käyttäjälöytyy ja asettaa sen jälkeen kirjautuneeksi
     function checkLogin($email, $salasana)
     {
-        $user = $this->_db->getAsiakasByEmail($email);
+        if($this->_asiakas)
+            $user = $this->_db->getAsiakasByEmail($email);
+        else
+            $user = $this->_db->getTyontekijaByEmail($email);
         
         if(isset($user) && $user->getSalasana() == $this->createPasswordHash($salasana))
         {
             $this->_user = $user;
             $timestamp = time();
-            $_SESSION['loggedin'] = $timestamp;
-            $_SESSION['id'] = $user->getId();
-            $_SESSION['hash'] = $this->createHash($user->getEtunimi() . $user->getSukunimi() . $user->getId() . $timestamp);
+            $_SESSION[$this->_sessionprefix . 'loggedin'] = $timestamp;
+            $_SESSION[$this->_sessionprefix . 'id'] = $user->getId();
+            $_SESSION[$this->_sessionprefix . 'hash'] = $this->createHash($user->getEtunimi() . $user->getSukunimi() . $user->getId() . $timestamp);
             
             return $user;
         }

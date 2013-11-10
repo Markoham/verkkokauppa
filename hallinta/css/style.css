@@ -1,0 +1,308 @@
+body
+{
+    background-color: rgb(47, 27, 10);
+    background-image: url(../img/bg.png);
+    background-attachment:fixed;
+    font-family: Geneva;
+    font-size: 10pt;
+    color: rgb(225, 225, 225);
+    font-family: 'Scada', sans-serif;
+    overflow-y:scroll;
+}
+
+p
+{
+    padding: 0em;
+}
+
+h1
+{
+    font-size: 48px;
+    line-height: 40px;
+    letter-spacing: -1px;
+    color: rgb(66, 139, 202);
+    margin: 0 0 0.5em 0;
+    padding: 0 0 0 0;
+    font-weight: 100;
+    font-family: 'IM Fell English', serif;
+    text-shadow: 3px 4px 5px rgba(66, 139, 202, 0.7);
+}
+
+input, intput:hover, button, button:hover
+{
+    transition: all .2s linear;
+}
+
+a
+{
+    color: #8C524D;
+    transition: all .2s linear;
+    text-shadow: 3px 4px 5px #000;
+    font-size: 11pt;
+}
+
+a:hover, a:focus
+{
+    color: rgb(42, 100, 150);
+    transition: all .2s linear;
+}
+
+/* ------------------------ LOGO --------------------- */
+#logo
+{
+    margin-top: 2em;
+    height: 180px;
+    background-color: #333;
+    color: #fff;
+    background-image: url(../img/bg_header.jpg);
+    background-size: 100% auto;
+    border: 1px solid #666;
+    text-align:center;
+    border-radius: 4px;
+}
+
+#logo h1 a
+{
+    line-height: 180px;
+    font-size: 70pt;
+    letter-spacing: -5px;  
+    color: rgba(255,255,255,0.4);
+    text-shadow: 0px 3px 8px rgba(0,0,0,0.8);
+    text-decoration: none;
+}
+
+@media screen and (max-width: 1200px) {
+    #logo
+    {
+        height: 15vw;
+    }
+    
+    #logo h1 a
+    {
+        line-height: 15vw;
+        font-size: 7.8vw;
+    }
+}
+
+/* ------------------------ NAVI --------------------- */
+#nav
+{
+    min-height: 10em;
+    list-style: none;
+    margin: 0;
+    margin-top: 1em;
+    padding: 0;
+    width: 100%;
+    border: 1px solid #666;
+    border-radius: 4px;
+}
+
+#nav ul
+{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#nav li
+{
+	display: inline;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#nav a
+{
+    background-color: rgba(60, 60, 60, 0.5);
+    border-bottom: 1px solid #393939;
+    color: #ccc;
+    display: block;
+    margin: 0 0;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-left: 3px solid #ccc;
+    text-shadow: none;
+    font-size: 10pt;
+}
+
+#nav .alakategoria a
+{
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left: 3px solid #ccc;
+}
+
+#nav .navitem a
+{
+    color: #ccc;
+    background-color: rgba(60, 60, 60, 0.5);
+    border-left: 3px solid #ccc;
+}
+
+#nav .navitem:last-child a
+{
+    border-bottom: 0;
+}
+
+#nav a:hover
+{
+	color: #fff;
+    padding-bottom: 8px;
+    background-color: rgba(37, 128, 162, 0.5);
+    border-left: 3px solid rgb(146,78,50);
+}
+
+#nav a.active
+{
+	color: #fff;
+    padding-bottom: 8px;
+    background-color: #2580a2;
+    background-color: rgba(37, 128, 162, 0.5);
+    border-left: 3px solid rgb(146,78,50);
+}
+
+#nav .alakategoria
+{
+    overflow:hidden;
+    max-height: 0;
+    transition: all 4s ease-in-out;
+}
+
+#nav .alakategoria.active
+{
+    max-height: 200em;
+}
+
+#nav li:hover > .alakategoria
+{
+    max-height: 200em;
+}
+
+#nav .paakategoria i
+{
+    transition: all .2s ease-in-out;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+}
+
+#nav li:hover > .paakategoria i
+{
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+#nav .paakategoria i.active
+{
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+/* ------------------------ CONTENT --------------------- */
+#content
+{
+    margin: 0;
+    margin-top: 1em;
+    min-height: 10em;
+    background-color: rgba(60, 60, 60, 0.5);
+    border: 1px solid #666;
+    padding: 1em;
+    border-radius: 4px;
+}
+
+/* ------------------------ FOOTER --------------------- */
+#footer
+{
+    text-align: center;
+    margin-top: 1em;
+    min-height: 2em;
+    background-color: rgba(60, 60, 60, 0.5);
+    color: #ccc;
+    border: 1px solid #666;
+    padding: 0.5em;
+    border-radius: 4px;
+}
+
+.editable
+{
+    background-color: #fff;
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 4px;
+    color: #000;
+    margin-bottom: 0.5em;
+}
+
+div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
+    content: attr(data-placeholder);
+    float: left;
+    margin-left: 2px;
+    color: #b3b3b3;
+}
+
+.productdescription
+{
+    height: 20em;
+    width: 100%;
+    overflow-y:scroll;
+}
+
+#markdownEditorTabs ul
+{
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+#markdownEditorTabs li
+{
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+#markdownEditorTabs a:first-child
+{
+    border-top-left-radius: 4px;
+}
+
+#markdownEditorTabs a:last-child
+{
+    border-top-right-radius: 4px;
+}
+
+#markdownEditorTabs a
+{
+    margin: 0;
+    display: inline-block;
+    width: 10em;
+    padding: 0.2em 1em 0.2em 1em;
+    background-color: #FFF;
+    text-shadow: none;
+    color: #333;
+    text-decoration: none;
+}
+
+#markdownEditorTabs a.active
+{
+    background-color: #CCC;
+}
+
+#markdownEditor
+{
+    background-color: #ccc;
+    padding: 0.5em;
+    border-radius: 0 4px 4px 4px;
+}
+
+#productdescriptionlive
+{
+    margin: 0;
+}
+
+#productdescriptionsource
+{
+    visibility: hidden;
+    display: none;
+}
