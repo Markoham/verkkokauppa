@@ -1,6 +1,9 @@
 <?php
 if(isset($_GET['add']))
 {
+    if(isset($_GET['productname']) && isset($_GET['productprice']) && isset($_GET['productdescriptionsource']))
+    {
+    }
 ?>
     <form method="post">
         <div class="form-group">
@@ -25,7 +28,11 @@ if(isset($_GET['add']))
             </div>
         </div>
         <div class="form-group">
-            <label for="productcategories">Tuotteen kategoriat</label>  
+            <label for="productcategories">Tuotteen kategoriat</label>
+            <div id="productcategylist"></div>
+            <div id="search">
+                <input type="text" class="form-control" id="searchfield"><button type="button" onclick="" class="btn btn-primary">Etsi</button>
+            </div>
         </div>
         <button class="btn btn-primary" type="submit">Lisää tuote</button>
     </form>
@@ -73,19 +80,32 @@ if(isset($_GET['add']))
 }
 else if(isset($_GET['edit']))
 {
+    $tuote = $framework->getTuote($_GET['edit']);
+    if(isset($_GET['productname']) && isset($_GET['productprice']) && isset($_GET['productdescriptionsource']))
+    {
+    }
 ?>
     <form method="post">
         <div class="form-group">
             <label for="productname">Tuotteen nimi</label>
-            <input id="productname" class="form-control" type="text" placeholder="Tuotteen nimi" name="productname">
+            <input id="productname" class="form-control" type="text" placeholder="Tuotteen nimi" value="<?php echo $tuote->getTuotteennimi(); ?>" name="productname">
         </div>
         <div class="form-group">
             <label for="productprice">Tuotteen hinta</label>
-            <input id="productprice" class="form-control" type="text" placeholder="Tuotteen hinta" name="productprice">
+            <input id="productprice" class="form-control" type="text" placeholder="Tuotteen hinta" value="<?php echo $tuote->getHinta(); ?>" name="productprice">
         </div>
         <div class="form-group">
             <label for="productdescription">Tuotteen kuvaus</label>
-            <textarea class="form-control" id="productdescription" name="productdescription" placeholder="Tuotteen kuvaus"></textarea>
+            <div id="markdownEditorTabs">
+                <ul>
+                    <li><a href="javascript:void(0)" onClick="showLive();" id="linkproductdescriptionlive" class="active">Live</a></li>
+                    <li><a href="javascript:void(0)" onClick="showMarkdown();" id="linkproductdescriptionsource">Markdown</a></li>
+                </ul>
+            </div>
+            <div id="markdownEditor">
+                <div class="productdescription editable" id="productdescriptionlive" data-placeholder="Tuotteen kuvaus"><?php echo $tuote->getKuvaus(); ?></div>
+                <textarea class="productdescription form-control" id="productdescriptionsource" value="" name="productdescription" placeholder="Tuotteen kuvaus"></textarea>
+            </div>
         </div>
         <div class="form-group">
             <label for="productcategories">Tuotteen kategoriat</label>
@@ -93,15 +113,146 @@ else if(isset($_GET['edit']))
         </div>
         <button class="btn btn-primary" type="submit">Lisää tuote</button>
     </form>
+<script>
+    (function ($) {
+        
+        $('div[data-placeholder]').ready(function() {
+            if (this.textContent) {
+                this.dataset.divPlaceholderContent = 'true';
+            }
+            else {
+                delete(this.dataset.divPlaceholderContent);
+            }
+        });
+        
+        $(document).on('change keydown keypress input', 'div[data-placeholder]', function() {
+            if (this.textContent) {
+                this.dataset.divPlaceholderContent = 'true';
+            }
+            else {
+                delete(this.dataset.divPlaceholderContent);
+            }
+        });
+    })(jQuery);
+    
+    function showMarkdown()
+    {
+        document.getElementById("linkproductdescriptionlive").className = "";
+        document.getElementById("linkproductdescriptionsource").className = "active";
+        
+        var elem = document.getElementById("productdescriptionsource");
+        elem.style.visibility = "visible";
+        elem.style.display = "inherit";
+        
+        var elem2 = document.getElementById("productdescriptionlive");
+        elem2.style.visibility = "hidden";
+        elem2.style.display = "none";
+    }
+    
+    function showLive()
+    {
+        document.getElementById("linkproductdescriptionlive").className = "active";
+        document.getElementById("linkproductdescriptionsource").className = "";
+        
+        var elem = document.getElementById("productdescriptionlive");
+        elem.style.visibility = "visible";
+        elem.style.display = "inherit";
+        
+        var elem2 = document.getElementById("productdescriptionsource");
+        elem2.style.visibility = "hidden";
+        elem2.style.display = "none";
+    }
+</script>
 <?php
-}
-else if(isset($_GET['import']))
-{
-    echo "<h2><i class=\"fa fa-download\"></i> Import</h2>";
 }
 else if(isset($_GET['export']))
 {
     echo "<h2><i class=\"fa fa-upload\"></i> Export</h2>";
+    echo "<a href=\"" . explode("?",$framework->getCurrentUrl())[0] . "xmlExport.php\" target=\"blank\">XML</a>";
+}
+else if(isset($_GET['import']))
+{
+    echo "<h2><i class=\"fa fa-download\"></i> Import</h2>";
+    
+    if(isset($_FILES['file']) && $_FILES['file']['error'] == 0)
+    {
+        $xml = simplexml_load_file($_FILES['file']['tmp_name']);
+        
+        $dom = new DOMDocument;
+        
+        $dom->loadXML($xml->asXML());
+        
+        if (!$dom->schemaValidate("documentstructure.xsd")) {
+            echo "This document is not valid!\n";
+        }
+        else
+        {
+            echo "<h3>Päivitetyt tuotteet</h3>";
+            echo "<div class=\"importproducts\">";
+            foreach ($xml->children() as $child)
+            {
+                if($child->attributes()->action == "add")
+                {
+                    $status = " added";
+                    
+                    $product = new \MyApp\DataObjects\Tuote();
+                    $product->setId($child->attributes()->id);
+                    $product->setTuotteennimi($child->name);
+                    $product->setHinta($child->price);
+                    $product->setKuvaus($child->description);
+                    
+                    $id = $framework->addProduct($product);
+                    
+                    foreach ($child->categories->children() as $category)
+                    {
+                        if($category->attributes()->action == "add")
+                        {
+                            $framework->addTuotteelleKategoria($id, $category->attributes()->id);
+                        }
+                    }
+                }
+                else if($child->attributes()->action == "update")
+                {
+                    $status = " updated";
+                    
+                    $product = new \MyApp\DataObjects\Tuote();
+                    $product->setId($child->attributes()->id);
+                    $product->setTuotteennimi($child->name);
+                    $product->setHinta($child->price);
+                    $product->setKuvaus($child->description);
+                    
+                    $framework->updateProduct($product);
+                    
+                    foreach ($child->categories->children() as $category)
+                    {
+                        if($category->attributes()->action == "add")
+                        {
+                            $framework->addTuotteelleKategoria($product->getId(), $category->attributes()->id);
+                        }
+                    }
+                }
+                else if($child->attributes()->action == "remove")
+                {
+                    $status = " removed";
+                }
+                else
+                    $status = " none";
+                    
+                echo "<div class=\"importproduct" . $status . "\">" . $child->name . "</div>";
+            }
+            echo "</div><hr />";
+        }
+    }
+    
+    ?>
+<form action="" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Tiedoston:</label>
+        <input class="form-control" type="file" name="file" id="file">
+    </div>
+    <button type="submit" class="btn">Import</button>
+</form>
+    <?php
 }
 else if(isset($_GET['product']))
 {

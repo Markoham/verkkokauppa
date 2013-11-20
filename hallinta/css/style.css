@@ -210,6 +210,40 @@ a:hover, a:focus
     border-radius: 4px;
 }
 
+.importproducts
+{
+}
+
+.importproducts .importproduct
+{
+    display:inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 4px 12px;
+}
+
+.importproducts .importproduct.none
+{
+    background-color: rgba(0,0,0,0.5);
+}
+
+.importproducts .importproduct.removed
+{
+    background-color: rgba(200,0,0,0.5);
+}
+
+.importproducts .importproduct.added
+{
+    background-color: rgba(0,200,0,0.5);
+}
+
+.importproducts .importproduct.updated
+{
+    background-color: rgba(200,200,0,0.5);
+}
+
 /* ------------------------ FOOTER --------------------- */
 #footer
 {
@@ -299,10 +333,31 @@ div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
 #productdescriptionlive
 {
     margin: 0;
+    outline: inherit;
 }
 
 #productdescriptionsource
 {
     visibility: hidden;
     display: none;
+}
+
+/* ------------------------ MARKDOWN BUTTON --------------------- */
+button.btn-markdown
+{
+    background: linear-gradient(to bottom, rgba(232,232,232,1) 0%, rgba(186,186,186,1) 100%);
+    border: 1px solid #666;
+    width: 32px;
+    margin: 1px;
+    height: 32px;
+}
+
+button.btn-markdown:hover
+{
+    background: linear-gradient(to bottom, rgba(211,211,211,1) 0%, rgba(150,150,150,1) 100%);
+}
+
+button.btn-markdown.active
+{
+    background: linear-gradient(to bottom, rgba(87,126,145,1) 0%,rgba(211,211,211,1) 100%);
 }

@@ -52,6 +52,48 @@ class DatabaseHandler
         $this->_pdo->exec("SET NAMES utf8");
     }
     
+    // -----------------------------------------------------------------------
+    // ------------------ TUOTTEET -------------------------------------------
+    // -----------------------------------------------------------------------
+    
+    function addProduct($product)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "tuotteet (tuotteennimi, hinta, kuvaus) VALUES (?, ?, ?);");
+        $kysely->execute(array($product->getTuotteennimi(), $product->getHinta(), $product->getKuvaus()));
+        
+        return $this->_pdo->lastInsertId();
+    }
+    
+    // -----------------------------------------------------------------------
+    // ------------------ VARASTO --------------------------------------------
+    // -----------------------------------------------------------------------
+    
+    // -----------------------------------------------------------------------
+    // ------------------ KATEGORIAT -----------------------------------------
+    // -----------------------------------------------------------------------
+    
+    function addTuotteelleKategoria($productId, $categoryId)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "tuotteenkategoriat (tuoteid, kategoriaid) VALUES (?, ?);");
+        $kysely->execute(array($productId, $categoryId));
+        
+        return $this->_pdo->lastInsertId();
+    }
+    
+    // -----------------------------------------------------------------------
+    // ------------------ ASIAKKAAT ------------------------------------------
+    // -----------------------------------------------------------------------
+    
+    // -----------------------------------------------------------------------
+    // ------------------ TYÖNTEKIJÄT ----------------------------------------
+    // -----------------------------------------------------------------------
+    
+    // -----------------------------------------------------------------------
+    // ------------------ ASIAKKAAT JA TYÖNTEKIJÄT ---------------------------
+    // -----------------------------------------------------------------------
+    
+    // -----------------------------------------------------------------------
+    
     // Hakee varastosaldon tuotteelle
     function getVarastosaldo($id)
     {
@@ -108,6 +150,15 @@ class DatabaseHandler
         }
         
         return $tuotteet;
+    }
+    
+    function getTuotteenkategoriat($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT k.* FROM " . $this->_prefix . "tuotteenkategoriat AS tk, " . $this->_prefix . "kategoriat AS k WHERE tk.tuoteid = ? AND tk.kategoriaid = k.idkategoria;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Kategoria");
+        $kysely->execute(array($id));
+
+        return $kysely->fetchAll();
     }
     
     // Hakee kategorian
@@ -215,6 +266,35 @@ class DatabaseHandler
         }
         
         return $tyontekijat;
+    }
+    
+    // Lisää pääkategorian
+    function addMainCategory($category)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "kategoriat (kategoria, paakategoria) VALUES (?, 1);");
+        $kysely->execute(array($category));
+        
+        return $this->_pdo->lastInsertId();
+    }
+    
+    // Lisää kategorian
+    function addCategory($category, $maincategory)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "kategoriat (kategoria) VALUES (?);");
+        $kysely->execute(array($category));
+        
+        $id = $this->_pdo->lastInsertId();
+        
+        $kysely2 = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "alakategoriat (ylakategoriaid, alakategoriaid) VALUES (?, ?);");
+        $kysely2->execute(array($maincategory, $id));
+        
+        return $id;
+    }
+    
+    function updateProduct($product)
+    {
+        $kysely = $this->_pdo->prepare("UPDATE " . $this->_prefix . "tuotteet SET tuotteennimi = ?, hinta = ?, kuvaus = ? WHERE idtuote = ?");
+        $kysely->execute(array($product->getTuotteennimi(), $product->getHinta(), $product->getKuvaus(), $product->getId()));
     }
     
     // Sulkee yhteyden

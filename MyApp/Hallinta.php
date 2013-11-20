@@ -43,6 +43,11 @@ class Hallinta extends \MyApp\UserInfo
             return $this->getBasePath() . "tuotekuvat/default_thumb.jpg";
     }
     
+    function getServerUrl()
+    {
+        return "http" . (@$_SERVER["HTTPS"] == "on" ? "s" : "") . "://".str_replace("&","&amp;",@$_SERVER[HTTP_HOST]);
+    }
+    
     function getCurrentUrl()
     {
         return "http" . (@$_SERVER["HTTPS"] == "on" ? "s" : "") . "://".str_replace("&","&amp;",@$_SERVER[HTTP_HOST] . @$_SERVER[REQUEST_URI]);

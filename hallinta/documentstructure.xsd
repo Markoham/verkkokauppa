@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="products" type="productslist" />
+
+    <xs:complexType name="productslist">
+        <xs:sequence>
+            <xs:element name="product" type="productinfo" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="productinfo">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="price" type="xs:decimal" />
+            <xs:element name="description" type="xs:string" />
+            <xs:element name="categories" type="categorieslist" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer" />
+        <xs:attribute name="action" type="productactiontype" />
+    </xs:complexType>
+    
+    <xs:complexType name="categorieslist">
+        <xs:sequence>
+            <xs:element name="category" type="categoryinfo" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="categoryinfo">
+        <xs:attribute name="id" type="xs:integer" />
+        <xs:attribute name="action" type="categoryactiontype" />
+    </xs:complexType>
+
+    <xs:simpleType name="productactiontype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="update" />
+            <xs:enumeration value="add" />
+            <xs:enumeration value="remove" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="categoryactiontype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="add" />
+            <xs:enumeration value="remove" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

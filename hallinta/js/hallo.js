@@ -793,7 +793,7 @@
         editable: null,
         uuid: '',
         formatBlocks: ["p", "h2", "h3"],
-        buttonCssClass: null
+        buttonCssClass: ""
       },
       populateToolbar: function(toolbar) {
         var buttonize, buttonset, command, format, ie, widget, _i, _len, _ref,
@@ -930,7 +930,7 @@
         this.options.editable.keepActivated(true);
         this.options.dialog.dialog("open");
         this.options.dialog.on('dialogclose', function() {
-          jQuery('label', _this.button).removeClass('ui-state-active');
+          jQuery('label', _this.button).removeClass('active');
           _this.options.editable.element.focus();
           return _this.options.editable.keepActivated(false);
         });
@@ -1096,7 +1096,7 @@
         this.options.editable.keepActivated(true);
         this.options.dialog.dialog("open");
         return this.options.dialog.on('dialogclose', function() {
-          jQuery('label', _this.button).removeClass('ui-state-active');
+          jQuery('label', _this.button).removeClass('active');
           _this.options.editable.element.focus();
           return _this.options.editable.keepActivated(false);
         });
@@ -1964,7 +1964,7 @@
         this._load_dialog_image_properties_ui();
         this.options.dialog.on('dialogclose', function() {
           var scrollbar_pos;
-          jQuery('label', _this.button).removeClass('ui-state-active');
+          jQuery('label', _this.button).removeClass('active');
           scrollbar_pos = jQuery(document).scrollTop();
           _this.options.editable.element.focus();
           jQuery(document).scrollTop(scrollbar_pos);
@@ -2366,7 +2366,7 @@
             dialog.dialog('open');
             dialog.on('dialogclose', function() {
               widget.options.editable.restoreSelection(widget.lastSelection);
-              jQuery('label', buttonHolder).removeClass('ui-state-active');
+              jQuery('label', buttonHolder).removeClass('active');
               widget.options.editable.element.focus();
               return widget.options.editable.keepActivated(false);
             });
@@ -2381,10 +2381,10 @@
               nodeName = start.parent().prop('nodeName');
             }
             if (nodeName && nodeName.toUpperCase() === "A") {
-              jQuery('label', button).addClass('ui-state-active');
+              jQuery('label', button).addClass('active');
               return;
             }
-            return jQuery('label', button).removeClass('ui-state-active');
+            return jQuery('label', button).removeClass('active');
           });
         };
         if (this.options.link) {
@@ -3087,9 +3087,9 @@
       },
       refresh: function() {
         if (this.isChecked) {
-          return this.button.addClass('ui-state-active');
+          return this.button.addClass('active');
         } else {
-          return this.button.removeClass('ui-state-active');
+          return this.button.removeClass('active');
         }
       },
       checked: function(checked) {
@@ -3098,7 +3098,7 @@
       },
       _createButton: function(id, command, label, icon) {
         var classes;
-        classes = ['ui-button', 'ui-widget', 'ui-state-default', 'ui-corner-all', 'ui-button-text-only', "" + command + "_button"];
+        classes = ["btn", "btn-markdown"];
         return jQuery("<button id=\"" + id + "\"        class=\"" + (classes.join(' ')) + "\" title=\"" + label + "\">          <span class=\"ui-button-text\">            <i class=\"" + icon + "\"></i>          </span>        </button>");
       }
     });

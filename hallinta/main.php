@@ -14,7 +14,7 @@
         <script src="js/markdown/showdown.js"></script>
         <script src="js/markdown/to-markdown.js"></script>
         <script src="js/markdown/editor.js"></script>
-        <link rel="stylesheet" href="css/jquery-ui-1.8.16.custom.css" />
+
         <link rel="stylesheet" href="css/input.css" />
         <link rel="stylesheet" href="css/style.css" />
     </head>
@@ -35,7 +35,7 @@ echo "<ul>";
     echo "<li>";
         echo "<a class=\"paakategoria\" href=\"" . $framework->getBasePath() . "hallinta/?manage=products\">";
             echo "<i class=\"fa fa-chevron-right\"></i> Hallitse tuotteita</a>";
-        echo "<ul class=\"alakategoria\">";
+        echo "<ul class=\"alakategoria" . (isset($_GET['manage']) && $_GET['manage'] == "products" ? " active" : "") . "\">";
             echo "<li>";
                 echo "<a href=\"" . $framework->getBasePath() . "hallinta/?manage=products&amp;add\">";
                     echo "<i class=\"fa fa-plus\"></i> Lisää tuote</a>";
@@ -54,7 +54,7 @@ echo "<ul>";
     echo "<li>";
         echo "<a class=\"paakategoria\" href=\"" . $framework->getBasePath() . "hallinta/?manage=categories\">";
             echo "<i class=\"fa fa-chevron-right\"></i> Hallitse kategorioita</a>";
-        echo "<ul class=\"alakategoria\">";
+        echo "<ul class=\"alakategoria" . (isset($_GET['manage']) && $_GET['manage'] == "categories" ? " active" : "") . "\">";
             echo "<li>";
                 echo "<a href=\"" . $framework->getBasePath() . "hallinta/?manage=categories&amp;add\"><i class=\"fa fa-plus\"></i> Lisää kategoria</a>";
             echo "</li>";
@@ -64,7 +64,7 @@ echo "<ul>";
     echo "<li>";
         echo "<a class=\"paakategoria\" href=\"" . $framework->getBasePath() . "hallinta/?manage=employees\">";
             echo "<i class=\"fa fa-chevron-right\"></i> Hallitse työntekijöitä</a>";
-        echo "<ul class=\"alakategoria\">";
+        echo "<ul class=\"alakategoria" . (isset($_GET['manage']) && $_GET['manage'] == "employees" ? " active" : "") . "\">";
             echo "<li>";
                 echo "<a href=\"" . $framework->getBasePath() . "hallinta/?manage=employees&amp;add\">";
                     echo "<i class=\"fa fa-plus\"></i> Lisää työntekijä</a>";

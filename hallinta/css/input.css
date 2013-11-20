@@ -36,6 +36,16 @@ label
     font-size: 14px;
 }
 
+.form-control[type=file]
+{
+    color: inherit;
+    background-color: inherit;
+    border: none;
+    display: inherit;
+    height: auto;
+    box-shadow: none;
+}
+
 .form-inline .form-group
 {
     display: inline-block;

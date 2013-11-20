@@ -17,7 +17,9 @@ spl_autoload_register(function($class) {
 
 $framework = new \MyApp\Hallinta();
 
-if($framework->getUser())
+if($framework->getUser() && isset($_GET['xml']))
+    include("xmlExport.php");
+else if($framework->getUser())
     include("main.php");
 else
     include("login.php");

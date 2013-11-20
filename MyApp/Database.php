@@ -18,12 +18,16 @@ class Database
         $this->_db->setPrefix($database_prefix);
         $this->_db->connect();
     }
-        
+    
     // Putsaa syötteet
     function cleanInput($array, $key, $type = "string")
     {
         return $array[$key];
     }
+    
+    // -----------------------------------------------------------------------
+    // ------------------ TUOTTEET -------------------------------------------
+    // -----------------------------------------------------------------------
     
     function getTuote($tuote = null)
     {
@@ -31,11 +35,6 @@ class Database
             $tuote = $this->cleanInput($_GET, 'product');
         
         return $this->_db->getTuote($tuote);
-    }
-    
-    function getVarastoSaldo($id)
-    {
-        return $this->_db->getVarastosaldo($id);
     }
     
     function getTuotteet()
@@ -46,10 +45,65 @@ class Database
             return $this->_db->getKaikkiTuotteet();
     }
     
+    function updateProduct($product)
+    {
+        $this->_db->updateProduct($product);
+    }
+    
+    function addProduct($product)
+    {
+        return $this->_db->addProduct($product);
+    }
+    
+    // -----------------------------------------------------------------------
+    // ------------------ VARASTO --------------------------------------------
+    // -----------------------------------------------------------------------
+    
+    function getVarastoSaldo($id)
+    {
+        return $this->_db->getVarastosaldo($id);
+    }
+    
+    // -----------------------------------------------------------------------
+    // ------------------ KATEGORIAT -----------------------------------------
+    // -----------------------------------------------------------------------
+    
     function getKategoriat()
     {
         return $this->_db->getCategorys();
     }
+    
+    function getTuotteenkategoriat($id)
+    {
+        return $this->_db->getTuotteenkategoriat($id);
+    }
+    
+    function addTuotteelleKategoria($productId, $categoryId)
+    {
+        $this->_db->addTuotteelleKategoria($productId, $categoryId);
+    }
+    
+    function addCategory($category, $maincategory)
+    {
+        if($maincategory == 0)
+        {
+            $this->_db->addMainCategory($category);
+        }
+        else
+        {
+            $this->_db->addCategory($category, $maincategory);
+        }
+
+    }
+    
+    function updateCategory($id, $category, $maincategory)
+    {
+        
+    }
+    
+    // -----------------------------------------------------------------------
+    // ------------------ ASIAKKAAT ------------------------------------------
+    // -----------------------------------------------------------------------
     
     // Lisää asiakkaan
     function addAsiakkas($etunimi, $sukunimi, $email, $salasana)
@@ -62,6 +116,10 @@ class Database
         return $id;
     }
     
+    // -----------------------------------------------------------------------
+    // ------------------ TYÖNTEKIJÄT ----------------------------------------
+    // -----------------------------------------------------------------------
+    
     // Lisää työntekijän
     function addTyontekija($etunimi, $sukunimi, $email, $salasana)
     {
@@ -72,16 +130,22 @@ class Database
         return $id;
     }
     
-    
     function getTyontekijat()
     {
         return $this->_db->getTyontekijat();
     }
-        
+    
+    
+    // -----------------------------------------------------------------------
+    // ------------------ ASIAKKAAT JA TYÖNTEKIJÄT ---------------------------
+    // -----------------------------------------------------------------------
+    
     // Lähettää hukatun salasanan
     function sendLostPassword($email)
     {
          $asiakas = $this->_db->getAsiakasByEmail($email);
     }
+    
+    // -----------------------------------------------------------------------
 }
 ?>
