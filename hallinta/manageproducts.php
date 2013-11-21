@@ -75,6 +75,20 @@ else if(isset($_GET['edit']))
     </form>
 <?php
 }
+else if(isset($_GET['remove']))
+{
+    if(isset($_GET['comfirm']))
+        if($_GET['comfirm'] == "true")
+            $framework->removeTuote($_GET['remove']);
+        else
+            header("Location: " . (explode("&remove", $framework->getCurrentUrlNoAmp())[0]) );
+    else
+    {
+        echo "<h2>Haluatko varmasti poistaa tuotteen?</h2>";
+        echo "<a href=\"" . $framework->getCurrentUrl() . "&comfirm=true\" class=\"btn btn-success\">Kyllä</a>";
+        echo "<a href=\"" . $framework->getCurrentUrl() . "&comfirm=false\" class=\"btn btn-danger\">Ei</a>";
+    }
+}
 else if(isset($_GET['export']))
 {
     echo "<h2><i class=\"fa fa-upload\"></i> Export</h2>";
