@@ -164,7 +164,7 @@ else if(isset($_GET['import']))
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="file">Tiedoston:</label>
-        <input class="form-control" type="file" name="file" id="file">
+        <input class="form-control" accept="text/xml" type="file" name="file" id="file">
     </div>
     <button type="submit" class="btn">Import</button>
 </form>
