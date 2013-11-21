@@ -52,5 +52,10 @@ class Hallinta extends \MyApp\UserInfo
     {
         return "http" . (@$_SERVER["HTTPS"] == "on" ? "s" : "") . "://".str_replace("&","&amp;",@$_SERVER[HTTP_HOST] . @$_SERVER[REQUEST_URI]);
     }
+
+    function getCurrentUrlNoAmp()
+    {
+        return "http" . (@$_SERVER["HTTPS"] == "on" ? "s" : "") . "://".@$_SERVER[HTTP_HOST] . @$_SERVER[REQUEST_URI];
+    }
 }
 ?>
