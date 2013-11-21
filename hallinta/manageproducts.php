@@ -229,11 +229,17 @@ else if(isset($_GET['import']))
                         {
                             $framework->addTuotteelleKategoria($product->getId(), $category->attributes()->id);
                         }
+                        else if($category->attributes()->action == "remove")
+                        {
+                            $framework->removeTuotteenKategoria($product->getId(), $category->attributes()->id);
+                        }
                     }
                 }
                 else if($child->attributes()->action == "remove")
                 {
                     $status = " removed";
+                    $framework->removeTuote($child->attributes()->id);
+                    $framework->removeTuotteenKategoriat($child->attributes()->id);
                 }
                 else
                     $status = " none";

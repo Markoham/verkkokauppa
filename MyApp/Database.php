@@ -55,6 +55,11 @@ class Database
         return $this->_db->addProduct($product);
     }
     
+    function removeTuote($id)
+    {
+        $this->_db->removeTuote($id);
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ VARASTO --------------------------------------------
     // -----------------------------------------------------------------------
@@ -101,6 +106,16 @@ class Database
         
     }
     
+    function removeTuotteenKategoria($productId, $categoryId)
+    {
+        $this->_db->removeTuotteenKategoria($productId, $categoryId);
+    }
+
+    function removeTuotteenKategoriat($id)
+    {
+        $this->_db->removeTuotteenKategoriat($id);
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ ASIAKKAAT ------------------------------------------
     // -----------------------------------------------------------------------
