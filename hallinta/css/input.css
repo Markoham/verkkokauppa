@@ -245,12 +245,14 @@ table.table
 {
     border-bottom: 2px solid rgb(221, 221, 221);
     text-align: left;
+    white-space: nowrap;
 }
 
 .table tbody > tr > td
 {
     border-bottom: 1px solid rgb(221, 221, 221);
     vertical-align: top;
+    padding: 4px;
 }
 
 .table tbody > tr:last-child > td
