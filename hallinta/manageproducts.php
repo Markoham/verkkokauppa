@@ -36,46 +36,6 @@ if(isset($_GET['add']))
         </div>
         <button class="btn btn-primary" type="submit">Lisää tuote</button>
     </form>
-<script>
-    (function ($) {
-        $(document).on('change keydown keypress input', 'div[data-placeholder]', function() {
-            if (this.textContent) {
-                this.dataset.divPlaceholderContent = 'true';
-            }
-            else {
-                delete(this.dataset.divPlaceholderContent);
-            }
-        });
-    })(jQuery);
-    
-    function showMarkdown()
-    {
-        document.getElementById("linkproductdescriptionlive").className = "";
-        document.getElementById("linkproductdescriptionsource").className = "active";
-        
-        var elem = document.getElementById("productdescriptionsource");
-        elem.style.visibility = "visible";
-        elem.style.display = "inherit";
-        
-        var elem2 = document.getElementById("productdescriptionlive");
-        elem2.style.visibility = "hidden";
-        elem2.style.display = "none";
-    }
-    
-    function showLive()
-    {
-        document.getElementById("linkproductdescriptionlive").className = "active";
-        document.getElementById("linkproductdescriptionsource").className = "";
-        
-        var elem = document.getElementById("productdescriptionlive");
-        elem.style.visibility = "visible";
-        elem.style.display = "inherit";
-        
-        var elem2 = document.getElementById("productdescriptionsource");
-        elem2.style.visibility = "hidden";
-        elem2.style.display = "none";
-    }
-</script>
 <?php
 }
 else if(isset($_GET['edit']))
@@ -113,56 +73,6 @@ else if(isset($_GET['edit']))
         </div>
         <button class="btn btn-primary" type="submit">Lisää tuote</button>
     </form>
-<script>
-    (function ($) {
-        
-        $('div[data-placeholder]').ready(function() {
-            if (this.textContent) {
-                this.dataset.divPlaceholderContent = 'true';
-            }
-            else {
-                delete(this.dataset.divPlaceholderContent);
-            }
-        });
-        
-        $(document).on('change keydown keypress input', 'div[data-placeholder]', function() {
-            if (this.textContent) {
-                this.dataset.divPlaceholderContent = 'true';
-            }
-            else {
-                delete(this.dataset.divPlaceholderContent);
-            }
-        });
-    })(jQuery);
-    
-    function showMarkdown()
-    {
-        document.getElementById("linkproductdescriptionlive").className = "";
-        document.getElementById("linkproductdescriptionsource").className = "active";
-        
-        var elem = document.getElementById("productdescriptionsource");
-        elem.style.visibility = "visible";
-        elem.style.display = "inherit";
-        
-        var elem2 = document.getElementById("productdescriptionlive");
-        elem2.style.visibility = "hidden";
-        elem2.style.display = "none";
-    }
-    
-    function showLive()
-    {
-        document.getElementById("linkproductdescriptionlive").className = "active";
-        document.getElementById("linkproductdescriptionsource").className = "";
-        
-        var elem = document.getElementById("productdescriptionlive");
-        elem.style.visibility = "visible";
-        elem.style.display = "inherit";
-        
-        var elem2 = document.getElementById("productdescriptionsource");
-        elem2.style.visibility = "hidden";
-        elem2.style.display = "none";
-    }
-</script>
 <?php
 }
 else if(isset($_GET['export']))

@@ -14,7 +14,7 @@
         <script src="js/markdown/showdown.js"></script>
         <script src="js/markdown/to-markdown.js"></script>
         <script src="js/markdown/editor.js"></script>
-
+        <script src="js/myeditor.js"></script>
         <link rel="stylesheet" href="css/input.css" />
         <link rel="stylesheet" href="css/style.css" />
     </head>
