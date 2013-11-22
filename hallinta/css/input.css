@@ -290,3 +290,16 @@ table.table
     max-width: 8em;
     border: 1px solid #393939;
 }
+
+.message
+{
+    padding: 6px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+
+.message.message-ok
+{
+    background-color: rgba(0, 200, 0, .3);
+    border: 1px solid rgba(0, 200, 0, .4);
+}

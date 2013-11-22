@@ -116,6 +116,11 @@ class Database
         $this->_db->removeTuotteenKategoriat($id);
     }
 
+    function getCategoryNameById($id)
+    {
+        return $this->_db->getCategoryNameById($id);
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ ASIAKKAAT ------------------------------------------
     // -----------------------------------------------------------------------

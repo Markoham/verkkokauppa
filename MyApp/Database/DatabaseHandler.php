@@ -222,6 +222,14 @@ class DatabaseHandler
         $kysely->execute(array($id));
     }
 
+    function getCategoryNameById($id)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat WHERE idkategoria = ?;");
+        $kysely->execute(array($id));
+
+        return $kysely->fetchAll()[0]['kategoria'];
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ END KATEGORIAT -------------------------------------
     // -----------------------------------------------------------------------

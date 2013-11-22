@@ -312,20 +312,25 @@ div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
     display: inline-block;
     width: 10em;
     padding: 0.2em 1em 0.2em 1em;
-    background-color: #FFF;
+    background-color: rgba(47, 27, 10, 0.5);
     text-shadow: none;
-    color: #333;
+    color: #fff;
     text-decoration: none;
+}
+
+#markdownEditorTabs a:hover
+{
+    background-color: rgba(77, 57, 40, 1);
 }
 
 #markdownEditorTabs a.active
 {
-    background-color: #CCC;
+    background-color: rgba(107, 87, 70, 1);
 }
 
 #markdownEditor
 {
-    background-color: #ccc;
+    background-color: rgba(107, 87, 70, 1);
     padding: 0.5em;
     border-radius: 0 4px 4px 4px;
 }
@@ -360,4 +365,57 @@ button.btn-markdown:hover
 button.btn-markdown.active
 {
     background: linear-gradient(to bottom, rgba(87,126,145,1) 0%,rgba(211,211,211,1) 100%);
+}
+
+#search, #search input
+{
+    display: inline-block;
+}
+
+#search input
+{
+    width: auto;
+    margin-right: .5em;
+}
+
+#productcategylist
+{
+    margin-bottom: 6px;
+}
+
+#productcategylist .catListItem
+{
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0px 6px;
+    padding-right: 0;
+    background-color: rgba(107, 87, 70, 1);
+    margin-right: 6px;
+    margin-bottom: 6px;
+
+}
+
+#productcategylist .catListItem[data-action="remove"]
+{
+    background-color: rgba(200, 0, 0, .5);
+}
+
+#productcategylist .catListItem[data-action="add"]
+{
+    background-color: rgba(0, 200, 0, .5);
+}
+
+#productcategylist .catListItem .catListItemClose
+{
+    margin-left: 6px;
+    margin-right: 0;
+    padding: 4px 10px;
+    background-color: rgba(47, 27, 10, 1);
+    color: #fff;
+    border: 0;
+}
+
+#productcategylist .catListItem .catListItemClose:focus, #productcategylist .catListItem .catListItemClose:hover
+{
+    background-color: rgba(77, 57, 40, 1);
 }
