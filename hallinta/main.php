@@ -34,7 +34,7 @@ echo "<ul>";
 
     echo "<li>";
         echo "<a class=\"paakategoria\" href=\"" . $framework->getBasePath() . "hallinta/?manage=products\">";
-            echo "<i class=\"fa fa-chevron-right\"></i> Hallitse tuotteita</a>";
+            echo "<i class=\"fa fa-chevron-right" . (isset($_GET['manage']) && $_GET['manage'] == "products" ? " active" : "") . "\"></i> Hallitse tuotteita</a>";
         echo "<ul class=\"alakategoria" . (isset($_GET['manage']) && $_GET['manage'] == "products" ? " active" : "") . "\">";
             echo "<li>";
                 echo "<a href=\"" . $framework->getBasePath() . "hallinta/?manage=products&amp;add\">";
@@ -53,7 +53,7 @@ echo "<ul>";
 
     echo "<li>";
         echo "<a class=\"paakategoria\" href=\"" . $framework->getBasePath() . "hallinta/?manage=categories\">";
-            echo "<i class=\"fa fa-chevron-right\"></i> Hallitse kategorioita</a>";
+            echo "<i class=\"fa fa-chevron-right" . (isset($_GET['manage']) && $_GET['manage'] == "categories" ? " active" : "") . "\"></i> Hallitse kategorioita</a>";
         echo "<ul class=\"alakategoria" . (isset($_GET['manage']) && $_GET['manage'] == "categories" ? " active" : "") . "\">";
             echo "<li>";
                 echo "<a href=\"" . $framework->getBasePath() . "hallinta/?manage=categories&amp;add\"><i class=\"fa fa-plus\"></i> Lisää kategoria</a>";
@@ -63,7 +63,7 @@ echo "<ul>";
 
     echo "<li>";
         echo "<a class=\"paakategoria\" href=\"" . $framework->getBasePath() . "hallinta/?manage=employees\">";
-            echo "<i class=\"fa fa-chevron-right\"></i> Hallitse työntekijöitä</a>";
+            echo "<i class=\"fa fa-chevron-right" . (isset($_GET['manage']) && $_GET['manage'] == "employees" ? " active" : "") . "\"></i> Hallitse työntekijöitä</a>";
         echo "<ul class=\"alakategoria" . (isset($_GET['manage']) && $_GET['manage'] == "employees" ? " active" : "") . "\">";
             echo "<li>";
                 echo "<a href=\"" . $framework->getBasePath() . "hallinta/?manage=employees&amp;add\">";
