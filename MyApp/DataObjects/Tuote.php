@@ -4,7 +4,7 @@ namespace MyApp\DataObjects;
 
 class Tuote
 {
-    private $idtuote, $valmtun, $tuotteennimi, $kuvaus, $hinta;
+    private $idtuote, $valmtun, $tuotteennimi, $kuvaus, $hinta, $mimetype, $kuva;
     
     function setId($id)
     {
@@ -31,6 +31,16 @@ class Tuote
         $this->kuvaus = $kuvaus;
     }
     
+    function setMimetype($mimetype)
+    {
+        $this->mimetype = $mimetype;
+    }
+
+    function setKuva($kuva)
+    {
+        $this->kuva = $kuva;
+    }
+
     function getId()
     {
         return $this->idtuote;
@@ -54,6 +64,16 @@ class Tuote
     function getKuvaus()
     {
         return $this->kuvaus;
+    }
+
+    function getMimetype()
+    {
+        return $this->mimetype;
+    }
+
+    function getKuva()
+    {
+        return $this->kuva;
     }
 }
 ?>

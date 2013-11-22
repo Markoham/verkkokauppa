@@ -120,6 +120,12 @@ class DatabaseHandler
         $kysely->execute(array($id));
     }
 
+    function updateProductImage($id, $data, $mime)
+    {
+        $kysely = $this->_pdo->prepare("UPDATE " . $this->_prefix . "tuotteet SET kuva = ?, mimetype = ? WHERE idtuote = ?");
+        $kysely->execute(array($data, $mime, $id));
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ END TUOTTEET ---------------------------------------
     // -----------------------------------------------------------------------

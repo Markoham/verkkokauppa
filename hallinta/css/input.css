@@ -97,6 +97,7 @@ a.btn
     text-align: center;
     vertical-align: middle;
     margin-right: 6px;
+    margin-bottom: 6px;
 }
 
 .btn:focus, .btn:hover, .btn:active

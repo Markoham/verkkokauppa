@@ -210,6 +210,18 @@ a:hover, a:focus
     border-radius: 4px;
 }
 
+#productlist .picture
+{
+    width: 8em;
+}
+
+#productlist .picture img
+{
+    max-width: 8em;
+    max-height: 8em;
+    border: 1px solid #393939;
+}
+
 .importproducts
 {
 }
@@ -418,4 +430,9 @@ button.btn-markdown.active
 #productcategylist .catListItem .catListItemClose:focus, #productcategylist .catListItem .catListItemClose:hover
 {
     background-color: rgba(77, 57, 40, 1);
+}
+
+.price
+{
+    white-space: nowrap;
 }

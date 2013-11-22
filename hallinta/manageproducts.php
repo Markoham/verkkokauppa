@@ -277,6 +277,29 @@ else if(isset($_GET['product']))
     echo $tuote->getKuvaus();
     echo $tuote->getHinta();
 }
+else if(isset($_GET['productimage']))
+{
+    if(isset($_FILES['file']))
+    {
+        $filename = $_FILES['file']['tmp_name'];
+        $fp = fopen($filename , 'r');
+        $data = fread($fp, filesize($filename));
+        $mime = mime_content_type($filename);
+        fclose($fp);
+
+        $framework->updateProductImage($_GET['productimage'], $data, $mime);
+        echo "<div class=\"message message-ok\">Tuotekuva päivitetty</div>";
+    }
+?>
+<form action="" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Tiedoston:</label>
+        <input class="form-control" accept="image/*" type="file" name="file" id="file">
+    </div>
+    <button type="submit" class="btn">Update</button>
+</form>
+<?php
+}
 else
 {
     echo "<table id=\"productlist\" class=\"table\">";
@@ -296,7 +319,7 @@ else
     {
             echo "<tr>";
                 echo "<td class=\"picture\">";
-                    echo "<img src=\"" . $framework->getProductThumbImage($tuotteet[$i]->getId()) . "\" alt=\"\">";
+                    echo "<img src=\"" . $framework->getBasePath() . "productimage.php?product=" . $tuotteet[$i]->getId() . "\" alt=\"\">";
                 echo "</td>";
                 echo "<td class=\"product\">";
                     echo "<p>";
@@ -308,6 +331,8 @@ else
                 echo "<td class=\"shoppingcart\">" . $framework->getVarastoSaldo($tuotteet[$i]->getId()) . " kpl</td>";
                 echo "<td class=\"edit\">";
                     echo "<a class=\"btn btn-primary\" href=\"" . $framework->getCurrentUrl() . "&amp;edit=" . $tuotteet[$i]->getId() . "\">Muokkaa</a>";
+                    echo "<br />";
+                    echo "<a class=\"btn btn-primary\" href=\"" . $framework->getCurrentUrl() . "&amp;productimage=" . $tuotteet[$i]->getId() . "\">Tuotekuva</a>";
                 echo "</td>";
                 echo "<td class=\"remove\">";
                     echo "<a class=\"btn btn-primary\" href=\"" . $framework->getCurrentUrl() . "&amp;remove=" . $tuotteet[$i]->getId() . "\">Poista</a>";
