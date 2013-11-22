@@ -37,6 +37,6 @@ if(isset($_POST['etunimi']) && isset($_POST['sukunimi']) && isset($_POST['email'
             <label for="password">Salasana</label>
             <input type="password" class="form-control" id="password" name="passwd" placeholder="Salasana" required>
         </div>
-        <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
+        <button type="submit" class="btn btn-primary">Luo käyttäjätunnus</button>
     </form>
 </div>
