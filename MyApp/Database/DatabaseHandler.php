@@ -158,13 +158,13 @@ class DatabaseHandler
     {
         $kategoriat = Array();
 
-        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat WHERE paakategoria = 1;");
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat WHERE paakategoria = 1 ORDER BY kategoria ASC;");
         $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Kategoria");
         $kysely->execute();
 
         while ($kat = $kysely->fetch())
         {
-            $kyselyAla = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat AS k," . $this->_prefix . "alakategoriat AS ak WHERE ak.alakategoriaid = k.idkategoria AND ak.ylakategoriaid = ?;");
+            $kyselyAla = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "kategoriat AS k," . $this->_prefix . "alakategoriat AS ak WHERE ak.alakategoriaid = k.idkategoria AND ak.ylakategoriaid = ? ORDER BY kategoria ASC;");
             $kyselyAla->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Kategoria");
             $kyselyAla->execute(array($kat->getId()));
 
@@ -208,6 +208,18 @@ class DatabaseHandler
         $kysely2->execute(array($maincategory, $id));
 
         return $id;
+    }
+
+    function updateCategory($id, $category)
+    {
+        $kysely = $this->_pdo->prepare("UPDATE " . $this->_prefix . "kategoriat SET kategoria = ? WHERE idkategoria = ?;");
+        $kysely->execute(array($category, $id));
+    }
+
+    function removeCategory($id)
+    {
+        $kysely = $this->_pdo->prepare("DELETE FROM " . $this->_prefix . "kategoriat WHERE idkategoria = ?;");
+        $kysely->execute(array($id));
     }
 
     function removeTuotteenKategoria($productId, $categoryId)

@@ -101,9 +101,14 @@ class Database
 
     }
     
-    function updateCategory($id, $category, $maincategory)
+    function updateCategory($id, $category)
     {
-        
+        $this->_db->updateCategory($id, $category);
+    }
+
+    function removeCategory($id)
+    {
+        $this->_db->removeCategory($id);
     }
     
     function removeTuotteenKategoria($productId, $categoryId)
