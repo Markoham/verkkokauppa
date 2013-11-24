@@ -53,7 +53,7 @@ class UserInfo extends \MyApp\Database
         }
     }
     
-        // Palauttaa sha512 tiivisteen
+    // Palauttaa sha512 tiivisteen
     function createHash($value)
     {
         return hash("sha512", $value);
@@ -97,6 +97,18 @@ class UserInfo extends \MyApp\Database
         }
         
         return false;
+    }
+
+    // Sähköposti osoitteen tarkistus
+    function validEmail($email)
+    {
+        require_once('Validate.php');
+
+        if (@\Validate::email($email, array('check_domain' => 'true','use_rfc822' => true))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 ?>

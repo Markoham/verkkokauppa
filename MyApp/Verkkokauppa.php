@@ -4,14 +4,14 @@ namespace MyApp;
 class Verkkokauppa extends \MyApp\UserInfo
 {
     private $_theme, $_root= "/teht/verkkokauppa/";
-    
+
     function __construct()
     {
         parent::__construct();
-        
+
         if (!is_file("../settings.php")) die("Settings file is missing...");
         require("../settings.php");
-        
+
         $this->_root = $installfolder;
 
         if(isset($theme))
@@ -19,8 +19,8 @@ class Verkkokauppa extends \MyApp\UserInfo
         else
             $this->_theme = "Default";
     }
-    
-    // 
+
+    //
     function importExtralibs()
     {
         echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/unsemantic/css/unsemantic-grid-responsive.css\" />\n";
@@ -35,24 +35,13 @@ class Verkkokauppa extends \MyApp\UserInfo
     {
         unset($_SESSION['ostoskori']);
     }
-    
+
     // Palauttaa ostoskorin
     function getOstoskori()
     {
         return (isset($_SESSION['ostoskori']) ? unserialize($_SESSION['ostoskori']) : null);
     }
-    
-    function validEmail($email)
-    {
-        require_once('Validate.php');
-        
-        if (@\Validate::email($email, array('check_domain' => 'true','use_rfc822' => true))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
+
     // Hakee tuotteen kuvan
     function getProductImage($product)
     {
@@ -62,7 +51,7 @@ class Verkkokauppa extends \MyApp\UserInfo
         else
             return $this->getBasePath() . "tuotekuvat/img/default.jpg";
     }
-    
+
     // Hakee tuotteen pienen kuvan
     function getProductThumbImage($product)
     {
@@ -72,25 +61,25 @@ class Verkkokauppa extends \MyApp\UserInfo
         else
             return $this->getBasePath() . "tuotekuvat/default_thumb.jpg";
     }
-    
-    // Teeman osoite 
+
+    // Teeman osoite
     function getThemeUrlPath()
     {
         return $this->_root . $this->getThemePath();
     }
-    
+
     // Palauttaa Teeman osoitteen
     function getThemepath()
     {
         return "MyApp/Themes/" . $this->_theme . "/";
     }
-    
+
     // Palauttaa juurihakemiston
     function getBasePath()
     {
         return $this->_root;
     }
-    
+
     // Hakee sivuston sisällön
     function getPageContent()
     {
@@ -132,12 +121,12 @@ class Verkkokauppa extends \MyApp\UserInfo
             include($this->getThemepath() . "main.php");
         }
     }
-    
+
     //
     function getNav()
     {
         $framework = $this;
-        
+
         include($this->getThemepath() . "nav.php");
     }
 }
