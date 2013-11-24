@@ -8,39 +8,21 @@ class Hallinta extends \MyApp\UserInfo
     function __construct()
     {
         parent::__construct("../", false);
+        require("../../settings.php");
+
+        $this->_root = $installfolder;
     }
     
     function importExtralibs()
     {
-        echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "../MyApp/Themes/extralib/unsemantic/css/unsemantic-grid-responsive.css\" />\n";
-        echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "../MyApp/Themes/extralib/bootstrap/css/bootstrap.min.css\" />\n";
-        //echo "<script src=\"" . $this->_root . "MyApp/Themes/extralib/bootstrap/js/bootstrap.min.js\"></script>\n";
+        echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/unsemantic/css/unsemantic-grid-responsive.css\" />\n";
+        echo "<link rel=\"stylesheet\" href=\"" . $this->_root . "MyApp/Themes/extralib/bootstrap/css/bootstrap.min.css\" />\n";
     }
     
     // Palauttaa juurihakemiston
     function getBasePath()
     {
-        return "/teht/verkkokauppa/";
-    }
-    
-    // Hakee tuotteen kuvan
-    function getProductImage($product)
-    {
-        $image = $this->getBasePath() . "tuotekuvat/" . $product . ".jpg";
-        if(is_file($image))
-            return image;
-        else
-            return $this->getBasePath() . "tuotekuvat/default_thumb.jpg";
-    }
-    
-    // Hakee tuotteen pienen kuvan
-    function getProductThumbImage($product)
-    {
-        $image = $this->getBasePath() . "tuotekuvat/" . $product . "_thumb.jpg";
-        if(is_file($image))
-            return image;
-        else
-            return $this->getBasePath() . "tuotekuvat/default_thumb.jpg";
+        return $this->_root;
     }
     
     function getServerUrl()

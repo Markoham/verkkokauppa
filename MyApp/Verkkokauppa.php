@@ -12,6 +12,8 @@ class Verkkokauppa extends \MyApp\UserInfo
         if (!is_file("../settings.php")) die("Settings file is missing...");
         require("../settings.php");
         
+        $this->_root = $installfolder;
+
         if(isset($theme))
             $this->_theme = $theme;
         else
@@ -86,7 +88,7 @@ class Verkkokauppa extends \MyApp\UserInfo
     // Palauttaa juurihakemiston
     function getBasePath()
     {
-        return "/teht/verkkokauppa/";
+        return $this->_root;
     }
     
     // Hakee sivuston sisällön
