@@ -74,7 +74,9 @@ class UserInfo extends \MyApp\Database
     // uloskirjautuminen
     function logout()
     {
-        session_destroy();
+        unset($_SESSION[$this->_sessionprefix . 'loggedin']);
+        unset($_SESSION[$this->_sessionprefix . 'id']);
+        unset($_SESSION[$this->_sessionprefix . 'hash']);
     }
     
     // Tarkistaa että käyttäjälöytyy ja asettaa sen jälkeen kirjautuneeksi
