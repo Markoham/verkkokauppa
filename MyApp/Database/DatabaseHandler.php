@@ -126,6 +126,22 @@ class DatabaseHandler
         $kysely->execute(array($data, $mime, $id));
     }
 
+    function getRecentlyAdded($limit)
+    {
+        $tuotteet = Array();
+
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tuotteet ORDER BY idtuote DESC LIMIT 5;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tuote");
+        $kysely->execute();
+
+        while ($tuote = $kysely->fetch())
+        {
+            $tuotteet[] = $tuote;
+        }
+
+        return $tuotteet;
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ END TUOTTEET ---------------------------------------
     // -----------------------------------------------------------------------
