@@ -21,7 +21,7 @@ $framework = new \MyApp\Verkkokauppa();
 
 if(isset($_POST['ostoskori']))
 {
-    include("OstoskoriAjax.php");
+    include("MyApp/OstoskoriAjax.php");
 }
 else
 {
