@@ -36,6 +36,16 @@ label
     font-size: 14px;
 }
 
+.form-control[type=file]
+{
+    color: inherit;
+    background-color: inherit;
+    border: none;
+    display: inherit;
+    height: auto;
+    box-shadow: none;
+}
+
 .form-inline .form-group
 {
     display: inline-block;
@@ -86,6 +96,12 @@ a.btn
     line-height: 1.42857;
     text-align: center;
     vertical-align: middle;
+    margin-bottom: 6px;
+}
+
+.btn:last-child
+{
+    margin-right: 6px;
 }
 
 .btn:focus, .btn:hover, .btn:active
@@ -103,6 +119,42 @@ a.btn
 .btn.btn-primary:focus, .btn.btn-primary:hover, .btn.btn-primary:active
 {
     background-color: rgb(50, 118, 177);
+}
+
+.btn.btn-success
+{
+    color: #fff;
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+}
+
+.btn.btn-success:focus, .btn.btn-success:hover, .btn.btn-success:active
+{
+    background-color: rgb(71, 164, 71);
+}
+
+.btn.btn-danger
+{
+    color: #fff;
+    background-color: rgb(217, 83, 79);
+    border-color: rgb(212, 63, 58);
+}
+
+.btn.btn-danger:focus, .btn.btn-danger:hover, .btn.btn-danger:active
+{
+    background-color: rgb(210, 41, 37);
+}
+
+.btn.btn-success
+{
+    color: #fff;
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+}
+
+.btn.btn-success:focus, .btn.btn-success:hover, .btn.btn-success:active
+{
+    background-color: rgb(71, 164, 71);
 }
 
 .btn-group
@@ -235,12 +287,14 @@ table.table
 {
     border-bottom: 2px solid rgb(221, 221, 221);
     text-align: left;
+    white-space: nowrap;
 }
 
 .table tbody > tr > td
 {
     border-bottom: 1px solid rgb(221, 221, 221);
     vertical-align: top;
+    padding: 4px;
 }
 
 .table tbody > tr:last-child > td
@@ -252,4 +306,17 @@ table.table
 {
     max-width: 8em;
     border: 1px solid #393939;
+}
+
+.message
+{
+    padding: 6px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+
+.message.message-ok
+{
+    background-color: rgba(0, 200, 0, .3);
+    border: 1px solid rgba(0, 200, 0, .4);
 }
