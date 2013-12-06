@@ -65,6 +65,11 @@ class Database
         $this->_db->updateProductImage($id, $data, $mime);
     }
 
+    function getRecentlyAdded($limit)
+    {
+        return $this->_db->getRecentlyAdded($limit);
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ VARASTO --------------------------------------------
     // -----------------------------------------------------------------------
