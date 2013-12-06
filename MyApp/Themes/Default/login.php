@@ -8,7 +8,10 @@
         if(!$status)
             echo "<div class=\"alert alert-danger\">Käyttäjätunnus tai salasana väärin!</div>";
         else
-            header("location: " . $framework->getBasePath());
+            if(isset($redirectUrl))
+                header("location: " . $redirectUrl);
+            else
+                header("location: " . $framework->getBasePath());
     }
 ?>
 <div class="loginform">
