@@ -16,7 +16,7 @@ function genJSON($ostoskori)
     echo '] }';
 }
 
-if(isset($_POST['add'])
+if(isset($_POST['add']))
 {
     if(!isset($_SESSION['ostoskori']))
         $ostoskori = new \MyApp\DataObjects\Ostoskori();
@@ -37,7 +37,7 @@ if(isset($_POST['add'])
     
     genJSON($ostoskori);
 }
-else if(isset($_POST['update'])
+else if(isset($_POST['update']))
 {
     $ostoskori = unserialize($_SESSION['ostoskori']);
     
