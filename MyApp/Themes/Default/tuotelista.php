@@ -4,7 +4,7 @@
     $tuotteet = $framework->getTuotteet();
     for($i = 0, $c = count($tuotteet); $i < $c; $i++)
     {
-        echo "<tr><td class=\"picture\"><img src=\"productimage.php?product=" . $tuotteet[$i]->getId() . "\" alt=\"\"></td><td class=\"product\"><p><a href=\"?hcat=" . $_GET['hcat'] . "&amp;cat=" . $_GET['cat'] . "&amp;product=" . $tuotteet[$i]->getId() . "\">" . $tuotteet[$i]->getTuotteennimi() . "</a></p>" . \Michelf\Markdown::defaultTransform($tuotteet[$i]->getKuvaus()) . "</td><td class=\"price\">" . str_replace(".",",", $tuotteet[$i]->getHinta()) . " &euro;</td><td class=\"shoppingcart\">" . $this->getVarastoSaldo($tuotteet[$i]->getId()) . " kpl</td><td class=\"shoppingcart\"><button type=\"button\" class=\"btn btn-primary\" onClick=\"addTuote(" . $tuotteet[$i]->getId() . ")\"><span class=\"glyphicon glyphicon-plus\"></span> Lisää koriin</button></td></tr>";
+        echo "<tr><td class=\"picture\"><img src=\"productimage.php?product=" . $tuotteet[$i]->getId() . "\" alt=\"\"></td><td class=\"product\"><p><a href=\"?hcat=" . $_GET['hcat'] . "&amp;cat=" . $_GET['cat'] . "&amp;product=" . $tuotteet[$i]->getId() . "\">" . $tuotteet[$i]->getTuotteennimi() . "</a></p>" . \Michelf\Markdown::defaultTransform($tuotteet[$i]->getKuvaus()) . "</td><td class=\"price\">" . str_replace(".",",", $tuotteet[$i]->getHinta()) . " &euro;</td><td class=\"shoppingcart\"><button type=\"button\" class=\"btn btn-primary\" onClick=\"addTuote(" . $tuotteet[$i]->getId() . ")\"><span class=\"glyphicon glyphicon-plus\"></span> Lisää koriin</button></td></tr>";
     }
     echo "</tbody></table>";
 ?>
