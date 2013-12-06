@@ -26,7 +26,10 @@ class Ostoskori
     
     function updateTuote($tuote)
     {
-        $this->tuotteet[$tuote->getTuoteId()] = $tuote;
+        if($tuote->getMaara() > 0)
+            $this->tuotteet[$tuote->getTuoteId()] = $tuote;
+        else
+            unset($this->tuotteet[$tuote->getTuoteId()]);
     }
     
     function getTuotteet()
