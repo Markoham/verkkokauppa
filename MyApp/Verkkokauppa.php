@@ -120,6 +120,10 @@ class Verkkokauppa extends \MyApp\UserInfo
         {
             include($this->getThemepath() . "userinfo.php");
         }
+        else if(isset($_GET['search']))
+        {
+            include($this->getThemepath() . "search.php");
+        }
         else
         {
             include($this->getThemepath() . "main.php");

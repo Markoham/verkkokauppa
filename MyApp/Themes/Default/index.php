@@ -54,7 +54,7 @@
                     <div class="search">
                         <form class="form-inline" method="get" action="<?php echo "http" . (@$_SERVER["HTTPS"] == "on" ? "s" : "") . "://".str_replace("&","&amp;",@$_SERVER[HTTP_HOST] . @$_SERVER[REQUEST_URI]); ?>" role="form">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="search" name="search" placeholder="Hakusana">
+                                <input type="text" class="form-control" id="search" name="search" value="<?php echo @$_GET['search']; ?>" placeholder="Hakusana">
                             </div>
                             <button type="submit" class="btn btn-primary">Etsi</button>
                         </form>

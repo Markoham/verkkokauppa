@@ -70,6 +70,11 @@ class Database
         return $this->_db->getRecentlyAdded($limit);
     }
     
+    function searchProducts($search)
+    {
+        return $this->_db->searchProducts($search);
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ KATEGORIAT -----------------------------------------
     // -----------------------------------------------------------------------

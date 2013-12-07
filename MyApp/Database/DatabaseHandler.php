@@ -142,6 +142,23 @@ class DatabaseHandler
         return $tuotteet;
     }
 
+    function searchProducts($search)
+    {
+        $search = "%" . $search . "%";
+        $tuotteet = Array();
+
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tuotteet WHERE tuotteenNimi LIKE ? OR kuvaus LIKE ? ORDER BY idtuote DESC;");
+        $kysely->setFetchMode(\PDO::FETCH_CLASS, "\MyApp\DataObjects\Tuote");
+        $kysely->execute(array($search, $search));
+
+        while ($tuote = $kysely->fetch())
+        {
+            $tuotteet[] = $tuote;
+        }
+
+        return $tuotteet;
+    }
+
     // -----------------------------------------------------------------------
     // ------------------ END TUOTTEET ---------------------------------------
     // -----------------------------------------------------------------------
