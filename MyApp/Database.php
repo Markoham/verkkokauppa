@@ -171,6 +171,48 @@ class Database
     {
          $asiakas = $this->_db->getAsiakasByEmail($email);
     }
+
+    // -----------------------------------------------------------------------
+    // ------------------ TILAUS ---------------------------------------------
+    // -----------------------------------------------------------------------
+
+    // Tekee ostoskorin sisällöstä  tilauksen
+    function createTilaus()
+    {
+        if(isset($_SESSION['ostoskori']))
+        {
+            $ostoskori = unserialize($_SESSION['ostoskori']);
+
+            $tilausId = $this->_db->createTilaus($this->getUser()->getId());
+
+            $tuotteet = $ostoskori->getTuotteet();
+
+            foreach($tuotteet as $ostoskorituote)
+            {
+                for($i = 0; $i < $ostoskorituote->getMaara(); $i++)
+                    $this->_db->addTuoteTilaukseen($tilausId, $ostoskorituote->getTuoteId());
+            }
+
+            return $this->getTilausKesken();
+        }
+    }
+
+    function getTilausKesken()
+    {
+        $tilaus = $this->_db->getTilausKesken($this->getUser()->getId());
+        $tilaus = $this->_db->getTilauksenTuotteet($tilaus);
+        return $tilaus;
+    }
+
+    function tilausKesken()
+    {
+        return $this->_db->tilausKesken($this->getUser()->getId());
+    }
+
+    function updateTilausStatus($tilaus, $status)
+    {
+        $this->_db->updateTilausStatus($tilaus, $status);
+    }
     
     // -----------------------------------------------------------------------
 }

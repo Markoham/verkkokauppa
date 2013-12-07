@@ -20,8 +20,6 @@
     }
     if($this->getUser())
     {
-        echo "<li class=\"navitem\"><a " . (isset($_GET['myorders']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?myorders\"><i class=\"fa fa-truck\"></i> Omat tilaukset</a></li>";
-
         echo "<li class=\"navitem\"><a " . (isset($_GET['userinfo']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?userinfo\"><i class=\"fa fa-user\"></i> Omat tiedot</a></li>";
         
         echo "<li class=\"navitem\"><a " . (isset($_GET['logout']) ? "class=\"active\" " : "") . "href=\"" . $this->getBasePath() . "?logout\"><i class=\"fa fa-sign-out\"></i> Kirjaudu ulos</a></li>";

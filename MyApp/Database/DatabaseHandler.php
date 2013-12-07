@@ -348,21 +348,77 @@ class DatabaseHandler
     // -----------------------------------------------------------------------
     // ------------------ END ASIAKKAAT JA TYÖNTEKIJÄT -----------------------
     // -----------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // ------------------ TILAUS ---------------------------------------------
+    // -----------------------------------------------------------------------
     
+    function tilausKesken($asiakasId)
+    {
+        $tyontekijat = Array();
+
+        $kysely = $this->_pdo->prepare("SELECT COUNT(idtilaus) AS yht FROM " . $this->_prefix . "tilaukset WHERE asiakasid = ? AND tilauksentila = 0;");
+        $kysely->execute(array($asiakasId));
+
+        return $kysely->fetchColumn();
+    }
+
+    function getTilausKesken($asiakasId)
+    {
+        $tyontekijat = Array();
+
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tilaukset WHERE asiakasid = ? AND tilauksentila = 0;");
+        $kysely->execute(array($asiakasId));
+
+        $row = $kysely->fetch(\PDO::FETCH_OBJ);
+
+        $tilaus = new \MyApp\DataObjects\Tilaus();
+        $tilaus->setId($row->idtilaus);
+        $tilaus->setAsiakasId($row->asiakasid);
+        return $tilaus;
+    }
+
+    function createTilaus($asiakasId)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "tilaukset (asiakasid) VALUES (?);");
+        $kysely->execute(array($asiakasId));
+
+        return $this->_pdo->lastInsertId();
+    }
+
+    function addTuoteTilaukseen($tilausId, $tuoteId)
+    {
+        $kysely = $this->_pdo->prepare("INSERT INTO " . $this->_prefix . "tilauksentuotteet (tilausid, tuoteid) VALUES (?, ?);");
+        $kysely->execute(array($tilausId, $tuoteId));
+
+        return $this->_pdo->lastInsertId();
+    }
+
+    function getTilauksenTuotteet($tilaus)
+    {
+        $kysely = $this->_pdo->prepare("SELECT * FROM " . $this->_prefix . "tilauksentuotteet WHERE tilausid = ?;");
+        $kysely->execute(array($tilaus->getId()));
+
+        $tuotteet = array();
+        while ($tuote = $kysely->fetch(\PDO::FETCH_OBJ))
+        {
+            $tt = new \MyApp\DataObjects\TilauksenTuote();
+            $tt->setTuoteId($tuote->tuoteid);
+            $tt->setMaara(1);
+            $tilaus->addTuote($tt);
+        }
+
+        return $tilaus;
+    }
+
+    function updateTilausStatus($tilaus, $status)
+    {
+        $kysely = $this->_pdo->prepare("UPDATE " . $this->_prefix . "tilaukset SET tilauksentila = ? WHERE idTilaus = ?;");
+        $kysely->execute(array($status,$tilaus->getId()));
+    }
+
+    // -----------------------------------------------------------------------
+    // ------------------ END TILAUS -----------------------------------------
+    // -----------------------------------------------------------------------
+
     // Sulkee yhteyden
     function close()
     {
