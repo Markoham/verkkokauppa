@@ -72,17 +72,6 @@ echo "<ul>";
         echo "</ul>";
     echo "</li>";
 
-    echo "<li>";
-        echo "<a class=\"navitem\" href=\"" . $framework->getBasePath() . "hallinta/?manage=orders\">";
-            echo "<i class=\"fa fa-truck\"></i> Hallitse tilauksia</a>";
-    echo "</li>";
-
-    echo "<li>";
-        echo "<a class=\"navitem\" href=\"" . $framework->getBasePath() . "hallinta/?manage=settings\">";
-            echo "<i class=\"fa fa-wrench\"></i> Asetukset</a>";
-    echo "</li>";
-
-
     echo "<li class=\"navitem\">";
         echo "<a " . (isset($_GET['userinfo']) ? "class=\"active\" " : "") . "href=\"" . $framework->getBasePath() . "hallinta/?userinfo\">";
             echo "<i class=\"fa fa-user\"></i> Omat tiedot</a>";

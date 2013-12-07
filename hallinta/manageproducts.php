@@ -308,7 +308,6 @@ else
                 echo "<th class=\"picture\"></th>";
                 echo "<th class=\"product\">Tuote</th>";
                 echo "<th class=\"price\">Hinta</th>";
-                echo "<th class=\"shoppingcart\">Varasto saldo</th>";
                 echo "<th class=\"edit\">&nbsp;</th>";
                 echo "<th class=\"remove\">&nbsp;</th>";
             echo "</tr>";
@@ -328,7 +327,6 @@ else
                     echo "<p>" . $tuotteet[$i]->getKuvaus() . "</p>";
                 echo "</td>";
                 echo "<td class=\"price\">" . str_replace(".",",", $tuotteet[$i]->getHinta()) . " &euro;</td>";
-                echo "<td class=\"shoppingcart\">" . $framework->getVarastoSaldo($tuotteet[$i]->getId()) . " kpl</td>";
                 echo "<td class=\"edit\">";
                     echo "<a class=\"btn btn-primary\" href=\"" . $framework->getCurrentUrl() . "&amp;edit=" . $tuotteet[$i]->getId() . "\">Muokkaa</a>";
                     echo "<br />";
