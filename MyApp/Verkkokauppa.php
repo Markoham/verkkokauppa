@@ -112,6 +112,10 @@ class Verkkokauppa extends \MyApp\UserInfo
         {
             include($this->getThemepath() . "ostoskori.php");
         }
+        else if(isset($_GET['order']))
+        {
+            include($this->getThemepath() . "tilaus.php");
+        }
         else if(isset($_GET['userinfo']))
         {
             include($this->getThemepath() . "userinfo.php");
@@ -122,12 +126,27 @@ class Verkkokauppa extends \MyApp\UserInfo
         }
     }
 
-    //
+    // Palauttaa navin
     function getNav()
     {
         $framework = $this;
 
         include($this->getThemepath() . "nav.php");
+    }
+
+    function updateOstoskoriQuantity($tuoteId, $quantity)
+    {
+        $ostoskori = unserialize($_SESSION['ostoskori']);
+
+        $ostoskorituote = $ostoskori->getTuotteet()[$tuoteId];
+
+        if($ostoskorituote)
+        {
+            $ostoskorituote->setMaara($quantity);
+            $ostoskori->updateTuote($ostoskorituote);
+
+            $_SESSION['ostoskori'] = serialize($ostoskori);
+        }
     }
 }
 ?>
